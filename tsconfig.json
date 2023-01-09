@@ -10,7 +10,8 @@
       "@/feat-components/*": ["src/feat-components/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/styles/*": ["src/styles/*"],
-      "@/types/*": ["src/types/*"]
+      "@/types/*": ["src/types/*"],
+      "@/*": ["src/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
