@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
 import { theme, GlobalStyle } from '@/styles';
+import '/public/assets/fonts/fonts.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
