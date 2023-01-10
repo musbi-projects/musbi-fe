@@ -16,8 +16,8 @@ local_sha=${ARR_GIT_STDIN[1]}
 remote_ref=${ARR_GIT_STDIN[2]}
 remote_sha=${ARR_GIT_STDIN[3]}
 
-echo ARR_GIT_PARAMS
-echo ARR_GIT_STDIN
+echo $ARR_GIT_PARAMS
+echo $ARR_GIT_STDIN
 
 if [ "$url" != "$FORBIDDEN_HTTPS_URL" -a "$url" != "$FORBIDDEN_SSH_URL" ]
 then
