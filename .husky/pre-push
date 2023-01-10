@@ -5,19 +5,8 @@ FORBIDDEN_HTTPS_URL="https://github.com/musbi-projects/musbi-fe.git" # insert yo
 FORBIDDEN_SSH_URL="git@github.com:musbi-projects/musbi-fe.git" # insert your remote url (ssh)
 FORBIDDEN_REF="refs/heads/main" # insert branch ref​
 
-ARR_GIT_PARAMS=($(echo $HUSKY_GIT_PARAMS))
-ARR_GIT_STDIN=($(echo $HUSKY_GIT_STDIN))
-
 url=${FORBIDDEN_HTTPS_URL} # 원격 저장소 
 remote_ref=${FORBIDDEN_REF} # push 하려는 브랜치
-
-local_ref=${ARR_GIT_STDIN[0]}
-local_sha=${ARR_GIT_STDIN[1]}
-remote_ref=${ARR_GIT_STDIN[2]}
-remote_sha=${ARR_GIT_STDIN[3]}
-
-echo $ARR_GIT_PARAMS
-echo $ARR_GIT_STDIN
 
 if [ "$url" != "$FORBIDDEN_HTTPS_URL" -a "$url" != "$FORBIDDEN_SSH_URL" ]
 then
