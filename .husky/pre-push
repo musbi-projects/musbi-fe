@@ -11,7 +11,9 @@ url=${2} # 원격 저장소
 echo ${0}
 echo ${1}
 echo ${2}
-echo ${*}
+echo ${remote_ref}
+echo ${remote ref}
+
 
 
 if [ "$url" != "$FORBIDDEN_HTTPS_URL" -a "$url" != "$FORBIDDEN_SSH_URL" ]
