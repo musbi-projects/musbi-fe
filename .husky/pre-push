@@ -8,9 +8,12 @@ FORBIDDEN_REF="refs/heads/main" # insert branch ref​
 remote_ref="$1" # push 하려는 브랜치
 url="$2" # 원격 저장소 
 
+echo ${0}
 echo ${1}
 echo ${2}
 echo ${3}
+echo ${4}
+
 
 # if [ "$url" != "$FORBIDDEN_HTTPS_URL" -a "$url" != "$FORBIDDEN_SSH_URL" ]
 # then
