@@ -12,7 +12,9 @@ echo ${0}
 echo ${1}
 echo ${2}
 echo ${remote_ref}
-echo ${remote ref}
+echo ${remote_sha}
+echo ${local_ref}
+echo ${local_sha}
 
 
 
