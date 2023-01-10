@@ -11,8 +11,7 @@ url=${2} # 원격 저장소
 echo ${0}
 echo ${1}
 echo ${2}
-echo ${3}
-echo ${4}
+echo ${*}
 
 
 if [ "$url" != "$FORBIDDEN_HTTPS_URL" -a "$url" != "$FORBIDDEN_SSH_URL" ]
