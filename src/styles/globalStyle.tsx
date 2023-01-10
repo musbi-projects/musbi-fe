@@ -19,6 +19,6 @@ ul, ol {
 
 body {
   color: red;
+  font-family: 'SUITE', sans-serif;
 }
-
 `;
