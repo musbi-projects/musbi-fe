@@ -22,4 +22,5 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   padding: 18px 48px;
   height: 76px;
+  border-bottom: 1px solid rgba(37, 40, 47, 0.1);
 `;
