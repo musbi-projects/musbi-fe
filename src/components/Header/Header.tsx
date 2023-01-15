@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export interface HeaderProps {
+interface HeaderProps {
   left: React.ReactNode | React.ReactNode[];
   right: React.ReactNode | React.ReactNode[];
 }

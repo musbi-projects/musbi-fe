@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export interface AppLayoutProps {
+interface AppLayoutProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
