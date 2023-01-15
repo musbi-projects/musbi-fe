@@ -14,6 +14,15 @@ export default function index() {
       <Button size='large' shape='circle' variant='text' color='primary' onClick={() => {}}>
         버튼
       </Button>
+      <Button size='large' shape='circle' variant='contained' color='secondary' onClick={() => {}}>
+        버튼
+      </Button>
+      <Button size='large' shape='circle' variant='outlined' color='secondary' onClick={() => {}}>
+        버튼
+      </Button>
+      <Button size='large' shape='circle' variant='text' color='secondary' onClick={() => {}}>
+        버튼
+      </Button>
     </div>
   );
 }

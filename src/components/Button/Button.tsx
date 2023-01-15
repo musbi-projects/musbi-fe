@@ -1,10 +1,9 @@
 import { ButtonHTMLAttributes, HTMLAttributes } from 'react';
-import styled, { DefaultTheme, ThemedStyledFunction } from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonShape = 'circle' | 'round';
 type ButtonVariant = 'text' | 'outlined' | 'contained';
-type ButtonType = 'submit' | 'reset' | 'button';
 type ButtonColor = 'primary' | 'secondary';
 
 interface ButtonProps {
@@ -18,8 +17,8 @@ interface ButtonProps {
   rightIcon?: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
-  type?: ButtonType;
-  style?: React.CSSProperties;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  width?: React.CSSProperties['width'];
 }
 
 const Button = ({ leftIcon, rightIcon, children, ...props }: ButtonProps) => {
@@ -43,7 +42,7 @@ const StyledButton = styled.button<ButtonProps>`
   padding: 0px 24px;
   cursor: pointer;
 
-  width: fit-content;
+  width: ${({ width }) => width || 'fit-content'};
   border-radius: ${({ shape }) => getBorderRadius(shape)};
   height: ${({ size }) => getHeight(size)};
   border: ${({ variant }) => getBorder(variant)};
@@ -51,6 +50,7 @@ const StyledButton = styled.button<ButtonProps>`
   background-color: ${({ variant, color, theme }) => getBackgroundColor({ variant, color, theme })};
 
   color: ${({ variant, color, theme }) => getFontColor({ variant, color, theme })};
+  font-size: ${({ size }) => getFontSize(size)};
 
   :hover {
     opacity: 0.9;
@@ -61,6 +61,16 @@ const StyledButton = styled.button<ButtonProps>`
     pointer-events: auto;
   }
 `;
+
+const getFontSize = (size: ButtonSize) => {
+  const fontSize = {
+    large: '18px',
+    medium: '16px',
+    small: '14px',
+  };
+
+  return fontSize[size];
+};
 
 const getBackgroundColor = ({ variant, color, theme }: { variant: ButtonVariant; color: ButtonColor; theme: DefaultTheme }) => {
   const backgroundColor = {
