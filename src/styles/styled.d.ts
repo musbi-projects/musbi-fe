@@ -1,10 +1,9 @@
 import 'styled-components';
 
+export type ThemeColor = 'primary' | 'secondary' | 'black' | 'lightGray' | 'deepGray';
+
 declare module 'styled-components' {
   export interface DefaultTheme {
-    color: {
-      primary: string;
-      secondary: string;
-    };
+    color: { [key in ThemeColor]: string };
   }
 }
