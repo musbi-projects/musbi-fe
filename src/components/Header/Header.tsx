@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 interface HeaderProps {
-  left: React.ReactNode | React.ReactNode[];
-  right: React.ReactNode | React.ReactNode[];
+  left: React.ReactNode;
+  right: React.ReactNode;
 }
 
 const Header = ({ left, right }: HeaderProps) => {

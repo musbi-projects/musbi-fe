@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 interface AppLayoutProps {
-  children: React.ReactNode | React.ReactNode[];
+  children: React.ReactNode;
 }
 
 const AppLayout = ({ children }: AppLayoutProps) => {
