@@ -1,7 +1,8 @@
-export const theme = {
-  color: {
-    primary: '',
-  },
+import { DefaultTheme } from 'styled-components';
 
-  fontSize: {},
+export const theme: DefaultTheme = {
+  color: {
+    primary: 'green',
+    secondary: 'orange',
+  },
 };
