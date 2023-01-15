@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -18,7 +18,6 @@ ul, ol {
 }
 
 body {
-  color: red;
   font-family: 'SUITE', sans-serif;
 }
 `;
