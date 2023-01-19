@@ -1,5 +1,5 @@
 import atom from "./atom";
 export * from "./atom";
-export * from "./filteredCurrentMenu";
+export { filteredCurrentMenu } from "./filteredCurrentMenu";
 
 export default atom;

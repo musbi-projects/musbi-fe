@@ -2,8 +2,6 @@ import React from "react";
 import useToolBox from "@/components/ToolBox/hooks/useToolBox";
 import { HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants/common";
 import styled, { css } from "styled-components";
-import { useRecoilValue } from "recoil";
-import { filteredCurrentMenu } from "@/recoil/toolbox";
 
 const ToolBox = () => {
   const { menus, handleChangeMenu } = useToolBox();
