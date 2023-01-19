@@ -49,7 +49,7 @@ const StyledMenu = styled.button<{ isActive: boolean }>`
     padding: 8px;
     font-size: 11px;
     background-color: ${isActive ? "#e4f8ed" : "#fff"};
-    color: ${theme.color.lightGray};
+    color: ${isActive ? theme.color.primary : theme.color.lightGray};
     display: flex;
     flex-direction: column;
     align-items: center;
