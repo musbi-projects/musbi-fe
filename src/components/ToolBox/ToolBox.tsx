@@ -1,4 +1,5 @@
 import React from "react";
+import { MdOutlineTextFields } from "react-icons/md";
 import useToolBox from "@/components/ToolBox/hooks/useToolBox";
 import { HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants/common";
 import styled, { css } from "styled-components";
@@ -9,14 +10,14 @@ const ToolBox = () => {
   return (
     <StyledToolBoxContainer>
       <ul>
-        {menus?.map(({ id, name, isActive }, index) => (
+        {menus?.map(({ id, name, isActive, icon }, index) => (
           <li key={`toolbox-menu-${index + 1}`}>
             <StyledMenu
               type="button"
               isActive={isActive}
               onClick={() => handleChangeMenu(id)}
             >
-              <i>아이콘</i>
+              {icon}
               <span>{name}</span>
             </StyledMenu>
           </li>
