@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+import { HEADER_HEIGHT } from "@/constants";
+import styled, { css } from "styled-components";
 
 interface HeaderProps {
   left: React.ReactNode;
@@ -18,9 +19,16 @@ const Header = ({ left, right }: HeaderProps) => {
 export default Header;
 
 const StyledHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
-  padding: 18px 48px;
-  height: 76px;
-  border-bottom: 1px solid rgba(37, 40, 47, 0.1);
+  ${({ theme }) => css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 48px;
+    height: ${HEADER_HEIGHT}px;
+    border-bottom: 1px solid ${theme.color.border};
+  `}
 `;

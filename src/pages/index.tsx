@@ -1,8 +1,9 @@
-import Head from "next/head";
-import { Inter } from "@next/font/google";
+import React from "react";
 import AppLayout from "@/components/AppLayout/AppLayout";
 import Header from "@/components/Header";
-import React from "react";
+import styled from "styled-components";
+import { Inter } from "@next/font/google";
+import ToolBox from "@/components/ToolBox";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,10 @@ export default function Home() {
   return (
     <AppLayout>
       <Header left={<SampleLeft />} right={<SampleRight />} />
+      <ToolBox />
+      <StyledMainContainer>asdsadsadsadd</StyledMainContainer>
     </AppLayout>
   );
 }
+
+const StyledMainContainer = styled.main``;

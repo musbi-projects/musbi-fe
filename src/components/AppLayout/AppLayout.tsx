@@ -1,3 +1,4 @@
+import { HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants/common";
 import React from "react";
 import styled from "styled-components";
 
@@ -25,4 +26,6 @@ const StyledContainer = styled.div`
   height: 100%;
   max-width: 1920px;
   margin: 0 auto;
+  padding-top: ${HEADER_HEIGHT}px;
+  padding-left: ${TOOLBOX_WIDTH}px;
 `;
