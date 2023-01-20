@@ -5,6 +5,6 @@ export const findCurrentMenu = selector({
   key: "findCurrentMenu",
   get: ({ get }) => {
     const menus = get(toolBoxMenus);
-    return menus.filter((menu) => menu.isActive);
+    return menus.find((menu) => menu.isActive);
   },
 });
