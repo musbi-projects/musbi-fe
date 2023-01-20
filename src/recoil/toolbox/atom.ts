@@ -1,10 +1,5 @@
 import { atom } from "recoil";
-
-export interface ToolBoxMenus {
-  id: number;
-  name: string;
-  isActive: boolean;
-}
+import { ToolBoxMenus } from "./types";
 
 const initialMenus = [
   { id: 1, name: "텍스트", isActive: true },
