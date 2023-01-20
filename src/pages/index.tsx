@@ -1,8 +1,17 @@
 import React from "react";
-import { Inter } from "@next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import Input from "@/components/Input";
+import { CiSearch } from "react-icons/ci";
 
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <h1>Home</h1>
+      <Input
+        type="search"
+        variant="outlined"
+        placeholder="텍스트 검색"
+        icon={<CiSearch />}
+      />
+    </div>
+  );
 }
