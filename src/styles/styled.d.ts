@@ -1,9 +1,17 @@
-import 'styled-components';
+import "styled-components";
 
-export type ThemeColor = 'primary' | 'secondary' | 'black' | 'lightGray' | 'deepGray';
+export type ThemeColor = "primary" | "secondary" | "black" | "lightGray" | "deepGray";
+type FontSize = "title" | "body" | "label";
 
-declare module 'styled-components' {
+declare module "styled-components" {
   export interface DefaultTheme {
     color: { [key in ThemeColor]: string };
+    font: {
+      [key in FontSize]: {
+        large: string;
+        medium: string;
+        small: string;
+      };
+    };
   }
 }
