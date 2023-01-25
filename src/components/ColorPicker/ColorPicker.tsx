@@ -1,24 +1,27 @@
 import React from "react";
-import useColorPicker from "./hooks/useColorPicker";
+import { useColorPickerDisplay } from "./hooks/useColorPickerDisplay";
+import { SketchPicker } from "react-color";
 import styled, { css } from "styled-components";
-import { RGBColor, SketchPicker } from "react-color";
 
-const ColorPicker = () => {
-  const { color, displayColorPicker, handleClick, handleClose, handleChange } =
-    useColorPicker();
+import type { ColorPickerProps } from "./types";
+import type { RGBColor } from "react-color";
+
+const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
+  const { isOpenColorPicker, handleClick, handleClose } =
+    useColorPickerDisplay();
 
   return (
     <article>
       <StyledSwatch onClick={handleClick}>
         <StyledColor rgb={color} />
       </StyledSwatch>
-      {displayColorPicker ? (
+      {isOpenColorPicker ? (
         <StyledPopOver>
           <StyledCover onClick={handleClose} />
           <SketchPicker
             color={color}
-            onChange={handleChange}
-            onChangeComplete={handleChange}
+            onChange={onChange}
+            onChangeComplete={onChange}
           />
         </StyledPopOver>
       ) : null}

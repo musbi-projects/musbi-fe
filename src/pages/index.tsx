@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import AppLayout from "@/components/AppLayout/AppLayout";
 import Header from "@/components/Header";
 import styled from "styled-components";
 import { Inter } from "@next/font/google";
 import ToolBox from "@/components/ToolBox";
-import ColorPicker from "@/components/ColorPicker";
+import ColorPicker, { useColorPicker } from "@/components/ColorPicker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +22,15 @@ const SampleRight = () => {
 };
 
 export default function Home() {
+  const { color, handleChangeColor } = useColorPicker();
+
   return (
     <AppLayout>
       <Header left={<SampleLeft />} right={<SampleRight />} />
       <ToolBox />
       <StyledMainContainer>
         <h1>Color Picker</h1>
-        <ColorPicker />
+        <ColorPicker color={color} onChange={handleChangeColor} />
       </StyledMainContainer>
     </AppLayout>
   );

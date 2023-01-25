@@ -1,28 +1,13 @@
-import { useCallback, useState } from "react";
-import { ColorResult, RGBColor } from "react-color";
+import { useState } from "react";
+import { ColorChangeHandler, RGBColor } from "react-color";
 
-const useColorPicker = () => {
-  const [color, setColor] = useState<RGBColor>({
-    r: 0,
-    g: 0,
-    b: 0,
-    a: 1,
-  });
-  const [displayColorPicker, setDisplayColorPicker] = useState<Boolean>(false);
+export const useColorPicker = (
+  initialColor: RGBColor = { r: 0, g: 0, b: 0, a: 1 }
+) => {
+  const [color, setColor] = useState<RGBColor>(initialColor);
+  const handleChangeColor: ColorChangeHandler = (color, event) => {
+    setColor(color.rgb);
+  };
 
-  const handleClick = useCallback(() => {
-    setDisplayColorPicker(!displayColorPicker);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setDisplayColorPicker(false);
-  }, []);
-
-  const handleChange = useCallback((color: ColorResult) => {
-    setColor(color?.rgb);
-  }, []);
-
-  return { color, displayColorPicker, handleClick, handleClose, handleChange };
+  return { color, handleChangeColor };
 };
-
-export default useColorPicker;

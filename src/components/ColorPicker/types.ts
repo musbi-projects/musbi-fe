@@ -1,6 +1,6 @@
-export type Color = {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
-};
+import { ColorChangeHandler, RGBColor } from "react-color";
+
+export interface ColorPickerProps {
+  color: RGBColor;
+  onChange: ColorChangeHandler;
+}
