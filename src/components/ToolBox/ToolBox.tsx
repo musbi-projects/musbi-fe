@@ -1,5 +1,4 @@
 import React from "react";
-import { MdOutlineTextFields } from "react-icons/md";
 import useToolBox from "@/components/ToolBox/hooks/useToolBox";
 import { HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants/common";
 import styled, { css } from "styled-components";
