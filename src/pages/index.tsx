@@ -1,33 +1,17 @@
 import React from "react";
-import AppLayout from "@/components/AppLayout/AppLayout";
-import Header from "@/components/Header";
-import styled from "styled-components";
-import { Inter } from "@next/font/google";
-import ToolBox from "@/components/ToolBox";
-
-const inter = Inter({ subsets: ["latin"] });
-
-const SampleLeft = () => {
-  return <h1>musbi</h1>;
-};
-
-const SampleRight = () => {
-  return (
-    <div>
-      <span>Menu 1</span>
-      <span>Menu 2</span>
-    </div>
-  );
-};
+import Input from "@/components/Input";
+import { CiSearch } from "react-icons/ci";
 
 export default function Home() {
   return (
-    <AppLayout>
-      <Header left={<SampleLeft />} right={<SampleRight />} />
-      <ToolBox />
-      <StyledMainContainer>asdsadsadsadd</StyledMainContainer>
-    </AppLayout>
+    <div>
+      <h1>Home</h1>
+      <Input
+        type="search"
+        variant="outlined"
+        placeholder="텍스트 검색"
+        icon={<CiSearch />}
+      />
+    </div>
   );
 }
-
-const StyledMainContainer = styled.main``;
