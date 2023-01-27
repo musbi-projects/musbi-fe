@@ -32,11 +32,12 @@ const StyledToolBoxContainer = styled.article`
   ${({ theme }) => css`
     position: fixed;
     top: ${HEADER_HEIGHT}px;
-    left: 0;
+    right: 0;
     width: ${TOOLBOX_WIDTH}px;
     height: calc(100% - ${TOOLBOX_WIDTH}px);
-    border-right: 1px solid ${theme.color.border};
+    border-left: 1px solid ${theme.color.border};
     padding: 20px 0;
+    background-color: #fff;
   `}
 `;
 

@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { ToolBoxMenus } from "./types";
+import { ToolBoxAtom } from "./types";
 import {
   MdOutlineTextFields,
   MdOutlineCloudUpload,
@@ -35,7 +35,7 @@ const initialMenus = [
   },
 ];
 
-const toolBoxMenus = atom<ToolBoxMenus[]>({
+const toolBoxMenus = atom<ToolBoxAtom>({
   key: "toolBoxMenus",
   default: initialMenus,
 });

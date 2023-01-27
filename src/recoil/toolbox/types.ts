@@ -6,3 +6,5 @@ export interface ToolBoxMenus {
   isActive: boolean;
   icon: React.ReactNode;
 }
+
+export type ToolBoxAtom = ToolBoxMenus[];
