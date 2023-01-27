@@ -11,13 +11,13 @@ interface TextProps {
   children: React.ReactNode;
 }
 
-function Text({ as = "span", children, ...props }: TextProps) {
+function TextElement({ as = "span", children, ...props }: TextProps) {
   return createElement(as, props, children);
 }
 
-const StyledText = styled(Text)<TextProps>`
+const Text = styled(TextElement)<TextProps>`
   color: ${({ color, theme }) => theme.color[color]};
   font-size: ${({ size }) => size};
 `;
 
-export default StyledText;
+export default Text;

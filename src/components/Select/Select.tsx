@@ -1,4 +1,4 @@
-import React, { useState, Children, cloneElement, isValidElement, useCallback } from "react";
+import React, { useState, Children, cloneElement, isValidElement, useCallback, useEffect } from "react";
 
 import { useSelect, useSelectKeydown } from "./hooks";
 import { useEscClose, useOutsideClickClose } from "@/hooks";
@@ -6,12 +6,12 @@ import { useEscClose, useOutsideClickClose } from "@/hooks";
 import styled from "styled-components";
 
 import SelectProvider from "./SelectProvider";
-import { Text } from "../Text";
+import Text from "../Text";
 import { MdOutlineArrowDropDown, MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 interface SelectProps {
   children: React.ReactElement[];
-  onChange: () => void;
+  handleChange: (value: string) => void;
   trigger?: "click" | "hover";
   defaultValue?: string;
   disabled?: boolean;
@@ -27,17 +27,21 @@ export default function Select({ children, trigger = "click", defaultValue, disa
 
   useEscClose(() => setIsOpen(false));
   const { ref } = useOutsideClickClose(() => setIsOpen(false));
-  const { currentValue, handleClickSelectOption, filteredChildren, handleChange } = useSelect({
+  const { value, currentValue, handleClickSelectOption, filteredChildren, handleChange } = useSelect({
     children,
+    isOpen,
     handleCloseSelect,
   });
-  const { hoverIndex } = useSelectKeydown({ handleClick: handleClickSelectOption, length: filteredChildren?.length });
+  const targetIndex = useSelectKeydown({ handleClick: handleClickSelectOption, length: filteredChildren?.length });
 
-  console.log(currentValue);
-  console.log(isOpen);
+  useEffect(() => {
+    if (currentValue) {
+      // handleChange(currentValue);
+    }
+  }, [currentValue]);
 
   return (
-    <SelectProvider handleClickSelectOption={handleClickSelectOption} hoverIndex={hoverIndex}>
+    <SelectProvider handleClickSelectOption={handleClickSelectOption} targetIndex={targetIndex}>
       <StyledSelectContainer
         onClick={(e) => trigger === "click" && setIsOpen(true)}
         onMouseEnter={() => trigger === "hover" && setIsOpen(true)}
@@ -45,7 +49,7 @@ export default function Select({ children, trigger = "click", defaultValue, disa
         ref={ref}
       >
         {isOpen ? (
-          <StyledInput onChange={handleChange}></StyledInput>
+          <StyledInput value={value} onChange={handleChange}></StyledInput>
         ) : (
           <Text as='p' size='16px' color='black'>
             {currentValue || defaultValue}

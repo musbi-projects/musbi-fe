@@ -1,15 +1,16 @@
-import React, { useCallback, useState, useRef, useEffect, createElement } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 
 import SelectOption from "../SelectOption";
 
 interface UseSelectProps {
   children: React.ReactElement[];
+  isOpen: boolean;
   handleCloseSelect: () => void;
 }
 
-export const useSelect = ({ children, handleCloseSelect }: UseSelectProps) => {
+export const useSelect = ({ children, isOpen, handleCloseSelect }: UseSelectProps) => {
   const [value, setValue] = useState<string>("");
-  const [currentValue, setCurrentValue] = useState<string>();
+  const [currentValue, setCurrentValue] = useState<string>("");
   const [filteredChildren, setFilteredChildren] = useState<React.ReactElement[]>([]);
 
   const originalChildren = useRef<React.ReactElement[]>([]);
@@ -28,6 +29,8 @@ export const useSelect = ({ children, handleCloseSelect }: UseSelectProps) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       const filteredChildren = children.filter(({ props }) => props.value.includes(value));
+
+      setValue(value);
 
       if (value.length && filteredChildren.length) {
         return setFilteredChildren(filteredChildren);
@@ -57,9 +60,20 @@ export const useSelect = ({ children, handleCloseSelect }: UseSelectProps) => {
     return () => {};
   }, [children]);
 
+  useEffect(() => {
+    if (isOpen) {
+      setValue(currentValue);
+    }
+    if (!isOpen) {
+      setValue("");
+    }
+  }, [isOpen]);
+
   return {
+    value,
     currentValue,
     filteredChildren,
+
     handleClickSelectOption,
     handleChange,
   };

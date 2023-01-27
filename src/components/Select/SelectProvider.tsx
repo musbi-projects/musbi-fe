@@ -6,6 +6,6 @@ interface SelectProviderProps extends ISelectContext {
   children: React.ReactNode;
 }
 
-export default function SelectProvider({ children, handleClickSelectOption, hoverIndex }: SelectProviderProps) {
-  return <SelectContext.Provider value={{ handleClickSelectOption, hoverIndex }}>{children}</SelectContext.Provider>;
+export default function SelectProvider({ children, handleClickSelectOption, targetIndex }: SelectProviderProps) {
+  return <SelectContext.Provider value={{ handleClickSelectOption, targetIndex }}>{children}</SelectContext.Provider>;
 }

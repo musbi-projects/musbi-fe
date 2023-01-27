@@ -13,12 +13,12 @@ interface SelectOptionProps {
 }
 
 export default function SelectOption({ id, index, value, children, disabled = false }: SelectOptionProps) {
-  const { handleClickSelectOption, hoverIndex } = useSelectContext();
+  const { handleClickSelectOption, targetIndex } = useSelectContext();
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    hoverIndex === index ? setIsHover(true) : setIsHover(false);
-  }, [hoverIndex, index]);
+    targetIndex === index ? setIsHover(true) : setIsHover(false);
+  }, [targetIndex, index]);
 
   return (
     <StyledLi
