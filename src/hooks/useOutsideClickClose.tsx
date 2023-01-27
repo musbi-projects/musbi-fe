@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 
-export const useOutsideClickClose = <T,>(handler: any) => {
-  const ref = useRef<T>(null);
+export const useOutsideClickClose = (handler: any) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         handler();
       }
     }

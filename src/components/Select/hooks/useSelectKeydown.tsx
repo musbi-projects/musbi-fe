@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
 
 interface Params {
-  list: React.ReactElement[];
-  onClick: (id: string, value: string) => void;
+  length: number;
+  handleClick: (index: number) => void;
 }
 
-export const useSelectKeydown = ({ list, onClick }: Params) => {
+export const useSelectKeydown = ({ handleClick, length }: Params) => {
   const [hoverIndex, setHoverIndex] = useState(0);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowDown") {
-        setHoverIndex((prev) => (prev < list.length - 1 ? prev + 1 : 0));
+        setHoverIndex((prev) => (prev < length - 1 ? prev + 1 : 0));
       }
       if (e.key === "ArrowUp") {
-        setHoverIndex((prev) => (prev === 0 ? list.length - 1 : prev - 1));
+        setHoverIndex((prev) => (prev === 0 ? length - 1 : prev - 1));
       }
       if (e.key === "Enter") {
-        const {
-          props: { id, children },
-        } = list[hoverIndex];
-
-        onClick(id, children);
+        handleClick(hoverIndex);
       }
     };
 
@@ -30,7 +26,7 @@ export const useSelectKeydown = ({ list, onClick }: Params) => {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [list, hoverIndex, onClick]);
+  }, [length, hoverIndex, handleClick]);
 
   return { hoverIndex, setHoverIndex };
 };

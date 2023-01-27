@@ -6,7 +6,7 @@ import React from "react";
 
 export default function index() {
   return (
-    <div>
+    <div style={{ margin: "60px auto", width: "787px" }}>
       <Button size='large' shape='circle' variant='contained' color='primary' onClick={() => {}}>
         버튼
       </Button>
@@ -40,7 +40,7 @@ export default function index() {
       <Select onChange={() => {}}>
         {new Array(10).fill(0).map((_, index) => {
           return (
-            <Select.Option key={index} id={index.toString()} index={index}>
+            <Select.Option key={index} id={index.toString()} index={index} value={`옵션 ${index}`}>
               옵션 {index}
             </Select.Option>
           );
