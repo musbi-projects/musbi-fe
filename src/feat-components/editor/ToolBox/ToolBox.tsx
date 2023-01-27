@@ -1,5 +1,5 @@
 import React from "react";
-import useToolBox from "@/components/ToolBox/hooks/useToolBox";
+import { useToolBox } from "@/feat-components/editor/ToolBox";
 import { HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants/common";
 import styled, { css } from "styled-components";
 

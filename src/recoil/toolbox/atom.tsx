@@ -1,3 +1,4 @@
+import React from "react";
 import { atom } from "recoil";
 import { ToolBoxAtom } from "./types";
 import {
@@ -6,29 +7,28 @@ import {
   MdOutlineTagFaces,
   MdOutlineWallpaper,
 } from "react-icons/md";
-import React from "react";
 
 const initialMenus = [
   {
-    id: 1,
+    id: "text",
     name: "텍스트",
-    isActive: true,
+    isActive: false,
     icon: <MdOutlineTextFields size={24} />,
   },
   {
-    id: 2,
+    id: "upload",
     name: "업로드",
     isActive: false,
     icon: <MdOutlineCloudUpload size={24} />,
   },
   {
-    id: 3,
+    id: "background",
     name: "배경",
     isActive: false,
     icon: <MdOutlineWallpaper size={26} />,
   },
   {
-    id: 4,
+    id: "sticker",
     name: "스티커",
     isActive: false,
     icon: <MdOutlineTagFaces size={26} />,

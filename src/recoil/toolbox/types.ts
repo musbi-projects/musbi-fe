@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface ToolBoxMenus {
-  id: number;
+  id: string;
   name: string;
   isActive: boolean;
   icon: React.ReactNode;

@@ -7,22 +7,22 @@ interface DrawerProps {
   currentMenu: ToolBoxMenus | undefined;
 }
 
-const Drawer = ({ currentMenu }: DrawerProps) => {
+const DrawerContainer = ({ currentMenu }: DrawerProps) => {
   const renderer = useCallback(
-    (id: number) => {
-      if (id === 1) {
+    (id: ToolBoxMenus["id"]) => {
+      if (id === "text") {
         return <>Drawer 1</>;
       }
 
-      if (id === 2) {
+      if (id === "upload") {
         return <>Drawer 2</>;
       }
 
-      if (id === 3) {
+      if (id === "background") {
         return <>Drawer 3</>;
       }
 
-      if (id === 4) {
+      if (id === "sticker") {
         return <>Drawer 4</>;
       }
     },
@@ -38,7 +38,7 @@ const Drawer = ({ currentMenu }: DrawerProps) => {
   );
 };
 
-export default Drawer;
+export default DrawerContainer;
 
 const StyledDrawerContainer = styled.article`
   ${({ theme }) => css`
