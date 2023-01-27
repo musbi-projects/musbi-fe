@@ -1,7 +1,13 @@
 import "styled-components";
 
-export type ThemeColor = "primary" | "secondary" | "black" | "lightGray" | "deepGray";
-type FontSize = "title" | "body" | "label";
+export type ThemeColor =
+  | "primary"
+  | "secondary"
+  | "black"
+  | "lightGray"
+  | "deepGray"
+  | "border";
+  type FontSize = "title" | "body" | "label";
 
 declare module "styled-components" {
   export interface DefaultTheme {
