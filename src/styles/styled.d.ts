@@ -7,9 +7,17 @@ export type ThemeColor =
   | "lightGray"
   | "deepGray"
   | "border";
+  type FontSize = "title" | "body" | "label";
 
 declare module "styled-components" {
   export interface DefaultTheme {
     color: { [key in ThemeColor]: string };
+    font: {
+      [key in FontSize]: {
+        large: string;
+        medium: string;
+        small: string;
+      };
+    };
   }
 }
