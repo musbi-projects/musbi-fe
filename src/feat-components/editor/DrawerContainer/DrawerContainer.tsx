@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
-import { ToolBoxMenus } from "@/recoil/toolbox";
-import { DRAWER_WIDTH, HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants";
-import styled, { css } from "styled-components";
+import React, { useCallback } from 'react';
+import TextDrawer from '@/feat-components/editor/TextDrawer';
+import { ToolBoxMenus } from '@/recoil/toolbox';
+import { DRAWER_WIDTH, HEADER_HEIGHT, TOOLBOX_WIDTH } from '@/constants';
+import styled, { css } from 'styled-components';
 
 interface DrawerProps {
   currentMenu: ToolBoxMenus | undefined;
@@ -9,33 +10,31 @@ interface DrawerProps {
 
 const DrawerContainer = ({ currentMenu }: DrawerProps) => {
   const renderer = useCallback(
-    (id: ToolBoxMenus["id"]) => {
-      if (id === "text") {
-        return <>Drawer 1</>;
+    (id: ToolBoxMenus['id']) => {
+      if (id === 'text') {
+        return <TextDrawer />;
       }
 
-      if (id === "upload") {
+      if (id === 'upload') {
         return <>Drawer 2</>;
       }
 
-      if (id === "background") {
+      if (id === 'background') {
         return <>Drawer 3</>;
       }
 
-      if (id === "sticker") {
+      if (id === 'sticker') {
         return <>Drawer 4</>;
       }
     },
-    [currentMenu]
+    [currentMenu],
   );
 
   if (!currentMenu || !currentMenu.id) {
     return null;
   }
 
-  return (
-    <StyledDrawerContainer>{renderer(currentMenu.id)}</StyledDrawerContainer>
-  );
+  return <StyledDrawerContainer>{renderer(currentMenu.id)}</StyledDrawerContainer>;
 };
 
 export default DrawerContainer;
