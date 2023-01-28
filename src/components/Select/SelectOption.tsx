@@ -1,26 +1,18 @@
-import type { StyledSelectOptionProps } from "./types";
+import type { SelectOptionProps, StyledSelectOptionProps } from "./types";
 
 import { useState, useEffect, useMemo } from "react";
 import { useSelectContext } from "./hooks";
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 import Text from "../Text";
 
-interface SelectOptionProps {
-  id: string;
-  index: number;
-  value: string;
-  children?: React.ReactNode;
-  disabled?: boolean;
-}
-
 export default function SelectOption({ id, index, value, children, disabled = false }: SelectOptionProps) {
-  const { handleClickSelectOption, targetIndex, currentValue } = useSelectContext();
+  const { handleClickSelectOption, targetIndex, selectedOption } = useSelectContext();
   const [isHover, setIsHover] = useState(false);
 
   const selected = useMemo(() => {
-    return currentValue === value;
-  }, [value, currentValue])
+    return selectedOption.value === value;
+  }, [value, selectedOption.value])
 
   useEffect(() => {
     targetIndex === index ? setIsHover(true) : setIsHover(false);

@@ -37,7 +37,7 @@ export default function index() {
       <Text as='p' color='lightGray' size='large'>
         안농
       </Text>
-      <Select handleChange={() => {}}>
+      <Select onChange={({id, value}) => console.log(id, value)}>
         {new Array(10).fill(0).map((_, index) => {
           return (
             <Select.Option key={index} id={index.toString()} index={index} value={`옵션 ${index}`}>

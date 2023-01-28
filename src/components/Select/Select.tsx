@@ -1,5 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react";
+import type { SelectedOption } from "./types";
 
+import React, { useState, useCallback, useEffect } from "react";
 import { useSelect, useSelectKeydown } from "./hooks";
 import { useEscClose, useOutsideClickClose } from "@/hooks";
 import { useTheme } from "styled-components";
@@ -8,11 +9,11 @@ import styled from "styled-components";
 
 import SelectProvider from "./SelectProvider";
 import Text from "../Text";
-import { MdOutlineArrowDropDown, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { MdOutlineArrowDropDown } from "react-icons/md";
 
 interface SelectProps {
   children: React.ReactElement[];
-  handleChange: (value: string) => void;
+  onChange: ({id, value}: SelectedOption) => void;
   placeholder?: string;
   trigger?: "click" | "hover";
   defaultValue?: string;
@@ -21,7 +22,7 @@ interface SelectProps {
   height?: React.CSSProperties["height"];
 }
 
-export default function Select({ children, trigger = "click", defaultValue, disabled, placeholder,icon, height }: SelectProps) {
+export default function Select({ children, trigger = "click", defaultValue, disabled, placeholder,icon, height, onChange }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleCloseSelect = useCallback(() => {
     setIsOpen(false);
@@ -29,7 +30,7 @@ export default function Select({ children, trigger = "click", defaultValue, disa
 
   useEscClose(() => setIsOpen(false));
   const { ref } = useOutsideClickClose(() => setIsOpen(false));
-  const { value, currentValue, handleClickSelectOption, filteredChildren, handleChange } = useSelect({
+  const { value, selectedOption, handleClickSelectOption, filteredChildren, handleChange } = useSelect({
     children,
     isOpen,
     handleCloseSelect,
@@ -38,13 +39,13 @@ export default function Select({ children, trigger = "click", defaultValue, disa
   const theme = useTheme();
 
   useEffect(() => {
-    if (currentValue) {
-      // handleChange(currentValue);
+    if (selectedOption) {
+      onChange(selectedOption);
     }
-  }, [currentValue]);
+  }, [selectedOption]);
 
   return (
-    <SelectProvider handleClickSelectOption={handleClickSelectOption} targetIndex={targetIndex} currentValue={currentValue}>
+    <SelectProvider handleClickSelectOption={handleClickSelectOption} targetIndex={targetIndex} selectedOption={selectedOption}>
       <StyledSelectContainer
         onClick={(e) => trigger === "click" && setIsOpen(true)}
         onMouseEnter={() => trigger === "hover" && setIsOpen(true)}
@@ -53,7 +54,7 @@ export default function Select({ children, trigger = "click", defaultValue, disa
       >
 
         {isOpen && <StyledInput value={value} onChange={handleChange} placeholder={placeholder}></StyledInput>}
-        {!isOpen && <Text as='p' size={theme.font.body.medium} color='black'>{currentValue || defaultValue}</Text>}
+        {!isOpen && <Text as='p' size={theme.font.body.medium} color='black'>{selectedOption.value || defaultValue}</Text>}
 
         <StyledIconsWrapper>
           {icon}

@@ -1,28 +1,30 @@
+import type { SelectOptionProps, SelectedOption } from "../types";
+
 import React, { useCallback, useState, useRef, useEffect } from "react";
 
 import SelectOption from "../SelectOption";
 
 interface UseSelectProps {
-  children: React.ReactElement[];
+  children: React.ReactElement<SelectOptionProps>[];
   isOpen: boolean;
   handleCloseSelect: () => void;
 }
 
 export const useSelect = ({ children, isOpen, handleCloseSelect }: UseSelectProps) => {
   const [value, setValue] = useState<string>("");
-  const [currentValue, setCurrentValue] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<SelectedOption>({id: '', value: ''});
   const [filteredChildren, setFilteredChildren] = useState<React.ReactElement[]>([]);
 
   const originalChildren = useRef<React.ReactElement[]>([]);
 
   const handleClickSelectOption = useCallback(
     (index: number) => {
-      const { value } = children[index].props;
+      const { value, id } = children[index].props;
 
-      setCurrentValue(() => value);
+      setSelectedOption({id, value});
       handleCloseSelect();
     },
-    [handleCloseSelect, setCurrentValue],
+    [handleCloseSelect, setSelectedOption],
   );
 
   const handleChange = useCallback(
@@ -62,7 +64,7 @@ export const useSelect = ({ children, isOpen, handleCloseSelect }: UseSelectProp
 
   useEffect(() => {
     if (isOpen) {
-      setValue(currentValue);
+      setValue(selectedOption.value);
     }
     if (!isOpen) {
       setValue("");
@@ -71,7 +73,7 @@ export const useSelect = ({ children, isOpen, handleCloseSelect }: UseSelectProp
 
   return {
     value,
-    currentValue,
+    selectedOption,
     filteredChildren,
 
     handleClickSelectOption,
