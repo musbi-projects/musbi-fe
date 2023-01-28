@@ -1,7 +1,8 @@
-import React, { useState, Children, cloneElement, isValidElement, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { useSelect, useSelectKeydown } from "./hooks";
 import { useEscClose, useOutsideClickClose } from "@/hooks";
+import { useTheme } from "styled-components";
 
 import styled from "styled-components";
 
@@ -12,6 +13,7 @@ import { MdOutlineArrowDropDown, MdOutlineKeyboardArrowDown } from "react-icons/
 interface SelectProps {
   children: React.ReactElement[];
   handleChange: (value: string) => void;
+  placeholder?: string;
   trigger?: "click" | "hover";
   defaultValue?: string;
   disabled?: boolean;
@@ -19,7 +21,7 @@ interface SelectProps {
   height?: React.CSSProperties["height"];
 }
 
-export default function Select({ children, trigger = "click", defaultValue, disabled, icon, height }: SelectProps) {
+export default function Select({ children, trigger = "click", defaultValue, disabled, placeholder,icon, height }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleCloseSelect = useCallback(() => {
     setIsOpen(false);
@@ -33,6 +35,7 @@ export default function Select({ children, trigger = "click", defaultValue, disa
     handleCloseSelect,
   });
   const targetIndex = useSelectKeydown({ handleClick: handleClickSelectOption, length: filteredChildren?.length });
+  const theme = useTheme();
 
   useEffect(() => {
     if (currentValue) {
@@ -41,20 +44,16 @@ export default function Select({ children, trigger = "click", defaultValue, disa
   }, [currentValue]);
 
   return (
-    <SelectProvider handleClickSelectOption={handleClickSelectOption} targetIndex={targetIndex}>
+    <SelectProvider handleClickSelectOption={handleClickSelectOption} targetIndex={targetIndex} currentValue={currentValue}>
       <StyledSelectContainer
         onClick={(e) => trigger === "click" && setIsOpen(true)}
         onMouseEnter={() => trigger === "hover" && setIsOpen(true)}
         onMouseLeave={() => trigger === "hover" && setIsOpen(false)}
         ref={ref}
       >
-        {isOpen ? (
-          <StyledInput value={value} onChange={handleChange}></StyledInput>
-        ) : (
-          <Text as='p' size='16px' color='black'>
-            {currentValue || defaultValue}
-          </Text>
-        )}
+
+        {isOpen && <StyledInput value={value} onChange={handleChange} placeholder={placeholder}></StyledInput>}
+        {!isOpen && <Text as='p' size={theme.font.body.medium} color='black'>{currentValue || defaultValue}</Text>}
 
         <StyledIconsWrapper>
           {icon}
@@ -114,4 +113,5 @@ const StyledInput = styled.input`
   outline: none;
   border: none;
   position: relative;
+  font-size: ${({theme}) => theme.font.body.medium};
 `;

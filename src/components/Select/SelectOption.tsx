@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { useSelectContext } from "./hooks";
-import styled from "styled-components";
+import type { StyledSelectOptionProps } from "./types";
 
-import { Text } from "../Text";
+import { useState, useEffect, useMemo } from "react";
+import { useSelectContext } from "./hooks";
+import styled, {css} from "styled-components";
+
+import Text from "../Text";
 
 interface SelectOptionProps {
   id: string;
@@ -13,36 +15,66 @@ interface SelectOptionProps {
 }
 
 export default function SelectOption({ id, index, value, children, disabled = false }: SelectOptionProps) {
-  const { handleClickSelectOption, targetIndex } = useSelectContext();
+  const { handleClickSelectOption, targetIndex, currentValue } = useSelectContext();
   const [isHover, setIsHover] = useState(false);
+
+  const selected = useMemo(() => {
+    return currentValue === value;
+  }, [value, currentValue])
 
   useEffect(() => {
     targetIndex === index ? setIsHover(true) : setIsHover(false);
   }, [targetIndex, index]);
 
   return (
-    <StyledLi
+    <StyledSelectOption
       id={id}
-      onClick={() => handleClickSelectOption?.(index)}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onClick={() => !disabled && handleClickSelectOption?.(index)}
+      onMouseEnter={() => !disabled && setIsHover(true)}
+      onMouseLeave={() => !disabled && setIsHover(false)}
       isHover={isHover}
+      disabled={disabled}
+      selected={selected}
     >
       <Text as='p' size='16px' color='black'>
         {children || value}
       </Text>
-    </StyledLi>
+    </StyledSelectOption>
   );
 }
 
-const StyledLi = styled.li<{ isHover: boolean }>`
-  background-color:  ${({ theme, isHover }) => (isHover ? theme.color.lightGray : "#FFF")};
+const StyledSelectOption = styled.li<StyledSelectOptionProps>`
   padding: 8px 16px;
-  cursor: pointer;
 
-  :hover {
-    background-color: ${({ theme }) => theme.color.lightGray};
-    cursor: pointer;
-  }
+  ${({disabled, isHover, selected, theme}) => {
+    if (disabled) {
+      return css`
+        cursor: not-allowed;
+        p {
+          color: ${theme.color.lightGray};
+        }
+      `
+    }
+
+    if (selected) {
+      return css`
+        background-color: ${theme.color.secondary};
+        cursor: pointer;
+      `
+    }
+
+    if (isHover) {
+      return css`
+        background-color: ${theme.color.lightGray};
+        cursor: pointer;
+      `
+    }
+
+    return css`
+      background-color: #FFF;
+      cursor: pointer;
+    `
+  }}
+
 
 `;
