@@ -1,11 +1,12 @@
-import Button from '@/components/Button/Button';
-import Text from '@/components/Text/Text';
+import Button from "@/components/Button/Button";
+import Text from "@/components/Text/Text";
+import Select from "@/components/Select";
 
-import React from 'react';
+import React from "react";
 
 export default function index() {
   return (
-    <div>
+    <div style={{ margin: "60px auto", width: "787px" }}>
       <Button size='large' shape='circle' variant='contained' color='primary' onClick={() => {}}>
         버튼
       </Button>
@@ -27,7 +28,7 @@ export default function index() {
       <Text color='black' size='large'>
         안농
       </Text>
-      <Text as={'h1'} color='primary' size='large'>
+      <Text as={"h1"} color='primary' size='large'>
         안농
       </Text>
       <Text as='h2' color='deepGray' size='large'>
@@ -36,6 +37,15 @@ export default function index() {
       <Text as='p' color='lightGray' size='large'>
         안농
       </Text>
+      <Select onChange={({id, value}) => console.log(id, value)}>
+        {new Array(10).fill(0).map((_, index) => {
+          return (
+            <Select.Option key={index} id={index.toString()} index={index} value={`옵션 ${index}`}>
+              옵션 {index}
+            </Select.Option>
+          );
+        })}
+      </Select>
     </div>
   );
 }
