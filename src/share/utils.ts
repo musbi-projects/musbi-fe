@@ -1,18 +1,9 @@
-import { CommonStyleProps } from "@/types/common";
+import { CommonStyleProps } from '@/types/common';
 
-export const setCommonStyle = ({
-  pl,
-  pr,
-  pt,
-  pb,
-  ml,
-  mr,
-  mt,
-  mb,
-}: CommonStyleProps) => {
+export const setCommonStyle = ({ pl, pr, pt, pb, ml, mr, mt, mb }: CommonStyleProps) => {
   const style = [];
   const getFixedUnit = (value: string | number) => {
-    if (typeof value === "string") {
+    if (typeof value === 'string') {
       return value;
     }
 
@@ -50,5 +41,5 @@ export const setCommonStyle = ({
     style.push(`margin-bottom: ${getFixedUnit(mb)}`);
   }
 
-  return style.join(";");
+  return style.join(';') + ';';
 };
