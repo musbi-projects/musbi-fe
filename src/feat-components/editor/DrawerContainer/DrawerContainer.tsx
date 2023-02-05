@@ -3,6 +3,8 @@ import { ToolBoxMenus } from "@/recoil/toolbox";
 import { DRAWER_WIDTH, HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants";
 import styled, { css } from "styled-components";
 
+import UploadDrawer from "../UploadDrawer";
+
 interface DrawerProps {
   currentMenu: ToolBoxMenus | undefined;
 }
@@ -15,7 +17,7 @@ const DrawerContainer = ({ currentMenu }: DrawerProps) => {
       }
 
       if (id === "upload") {
-        return <>Drawer 2</>;
+        return <UploadDrawer />;
       }
 
       if (id === "background") {
