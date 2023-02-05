@@ -33,19 +33,25 @@ export const useTextDrawer = () => {
     const data = [
       {
         id: 1,
-        thumbnail: 'https://dummyimage.com/295x192/000/fff',
+        thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/ddangFonts.png',
         fontFamily: 'Nanum Gothic',
         name: '나눔고딕',
       },
       {
         id: 2,
-        thumbnail: 'https://dummyimage.com/295x192/000/fff',
+        thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/earlyfont_watermelon.png',
         fontFamily: 'SUITE',
         name: '수트',
       },
       {
         id: 3,
-        thumbnail: 'https://dummyimage.com/295x192/000/fff',
+        thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/kyoboHandwriting2021sjy.png',
+        fontFamily: 'MyeongJo',
+        name: '명조',
+      },
+      {
+        id: 4,
+        thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/leferi.png',
         fontFamily: 'MyeongJo',
         name: '명조',
       },

@@ -5,7 +5,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ['dummyimage.com'],
+    domains: ['musbi-bucket.s3.ap-northeast-1.amazonaws.com'],
   },
 };
 
