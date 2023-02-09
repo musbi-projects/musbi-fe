@@ -168,6 +168,7 @@ const StyledFileListWrapper = styled.div`
     .image-file {
       flex-shrink: 0;
       border-radius: 2px;
+      cursor: pointer;
     }
   }
 `;

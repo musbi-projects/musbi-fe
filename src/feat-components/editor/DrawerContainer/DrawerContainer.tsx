@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import TextDrawer from "@/feat-components/editor/TextDrawer";
 import { ToolBoxMenus } from "@/recoil/toolbox";
 import { DRAWER_WIDTH, HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants";
 import styled, { css } from "styled-components";
@@ -13,7 +14,7 @@ const DrawerContainer = ({ currentMenu }: DrawerProps) => {
   const renderer = useCallback(
     (id: ToolBoxMenus["id"]) => {
       if (id === "text") {
-        return <>Drawer 1</>;
+        return <TextDrawer />;
       }
 
       if (id === "upload") {
@@ -28,16 +29,14 @@ const DrawerContainer = ({ currentMenu }: DrawerProps) => {
         return <>Drawer 4</>;
       }
     },
-    [currentMenu]
+    [currentMenu],
   );
 
   if (!currentMenu || !currentMenu.id) {
     return null;
   }
 
-  return (
-    <StyledDrawerContainer>{renderer(currentMenu.id)}</StyledDrawerContainer>
-  );
+  return <StyledDrawerContainer>{renderer(currentMenu.id)}</StyledDrawerContainer>;
 };
 
 export default DrawerContainer;
