@@ -8,3 +8,5 @@ export interface CommonStyleProps {
   mt?: string | number;
   mb?: string | number;
 }
+
+export type Nullable<T> = T | null;

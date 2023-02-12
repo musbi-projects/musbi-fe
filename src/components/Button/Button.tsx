@@ -19,11 +19,12 @@ interface ButtonProps {
   disabled?: boolean;
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   width?: React.CSSProperties["width"];
+  weight?: React.CSSProperties["fontWeight"];
 }
 
-const Button = ({ leftIcon, rightIcon, children, ...props }: ButtonProps) => {
+const Button = ({ leftIcon, rightIcon, children, weight = "400", ...props }: ButtonProps) => {
   return (
-    <StyledButton {...props}>
+    <StyledButton {...props} weight={weight}>
       {leftIcon}
       {children}
       {rightIcon}
@@ -51,6 +52,7 @@ const StyledButton = styled.button<ButtonProps>`
 
   color: ${({ variant, color, theme }) => getFontColor({ variant, color, theme })};
   font-size: ${({ size }) => getFontSize(size)};
+  font-weight: ${({ weight }) => weight};
 
   :hover {
     opacity: 0.9;
