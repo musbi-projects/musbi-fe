@@ -1,46 +1,48 @@
-import React from "react";
-import Header from "@/components/Header";
-import ToolBox from "@/feat-components/editor/ToolBox";
-import DrawerContainer from "@/feat-components/editor/DrawerContainer";
-import { useCurrentMenuValue } from "@/recoil/toolbox";
-import { DRAWER_WIDTH, HEADER_HEIGHT, TOOLBOX_WIDTH } from "@/constants";
-import styled from "styled-components";
-
-const SampleLeft = () => {
-  return <h1>musbi - editor page</h1>;
-};
-
-const SampleRight = () => {
-  return (
-    <div>
-      <span>Menu 1</span>
-      <span>Menu 2</span>
-    </div>
-  );
-};
+import React from 'react';
+import Header from '@/components/Header';
+import ToolBox from '@/feat-components/editor/ToolBox';
+import BodyCanvas from '@/feat-components/editor/BodyCanvas';
+import CoverCanvas from '@/feat-components/editor/CoverCanvas';
+import EditorStatus from '@/feat-components/editor/EditorStatus';
+import DrawerContainer from '@/feat-components/editor/DrawerContainer';
+import { useEditorPage } from '@/feat-components/editor/hooks/useEditorPage';
+import { DRAWER_WIDTH, HEADER_HEIGHT, TOOLBOX_WIDTH } from '@/constants';
+import styled from 'styled-components';
 
 const EditorPage = () => {
-  const currentMenu = useCurrentMenuValue();
+  const { editorViewContents, currentMenu } = useEditorPage();
 
   return (
     <>
-      <Header left={<SampleLeft />} right={<SampleRight />} />
-      <ToolBox />
-      <div>
+      <Header />
+      <main>
+        <ToolBox />
         <StyledContentContainer>
-          <h1>에디터 페이지</h1>
+          <EditorStatus />
+          <CoverCanvas contents={editorViewContents?.cover?.contents} />
+          <BodyCanvas contents={editorViewContents?.body?.contents} />
         </StyledContentContainer>
         <DrawerContainer currentMenu={currentMenu} />
-      </div>
+      </main>
     </>
   );
 };
 
 export default EditorPage;
 
-const StyledContentContainer = styled.div`
+const Line = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
   width: 100%;
-  height: 100%;
+  height: 1px;
+  background-color: red;
+`;
+
+const StyledContentContainer = styled.div`
+  width: calc(100% - ${TOOLBOX_WIDTH + DRAWER_WIDTH}px);
+  background-color: #f1f1f2;
   padding-top: ${HEADER_HEIGHT}px;
-  padding-right: ${TOOLBOX_WIDTH + DRAWER_WIDTH}px;
+  padding-bottom: 50%;
 `;

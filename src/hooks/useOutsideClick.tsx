@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-export const useOutsideClickClose = (handler: any) => {
+export const useOutsideClick = (handler: any) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -10,10 +10,10 @@ export const useOutsideClickClose = (handler: any) => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref, handler]);
 
