@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebounce } from '@/hooks';
+import { useEditorViewState } from '@/recoil/editorView';
 
 interface TextDrawerItem {
   id: number;
@@ -17,6 +18,7 @@ export const useTextDrawer = () => {
   const [textDrawerData, setTextDrawerData] = useState<TextDrawerData>({ data: [], type: '' });
   const [keyword, setKeyword] = useState('');
   const debouncedKeyword = useDebounce(keyword, 300);
+  const [editorView, setEditorView] = useEditorViewState();
   const textList = useMemo(() => {
     return textDrawerData?.data.filter(
       (item) => item.name.indexOf(debouncedKeyword) > -1 || item.fontFamily.indexOf(debouncedKeyword) > -1,
@@ -64,9 +66,16 @@ export const useTextDrawer = () => {
     return;
   }, []);
 
-  const handleClickDrawerItem = useCallback((item: any) => {
-    console.log('[handleClickDrawerItem]', { ...item, type: textDrawerData?.type });
-  }, []);
+  const handleClickDrawerItem = useCallback(
+    (item: any) => {
+      console.log('[handleClickDrawerItem]');
+      // setEditorView((contents) => {
+      //   const newLayer = { ...item, type: textDrawerData?.type, content: '텍스트를 입력하세요.' };
+      //   return;
+      // });
+    },
+    [textDrawerData],
+  );
 
   useEffect(() => {
     initTextDrawerData();

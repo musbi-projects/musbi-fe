@@ -1,4 +1,5 @@
 import { CommonStyleProps } from '@/types/common';
+import { S3_BUCKET_HOST } from '@/constants';
 
 export const setCommonStyle = ({ pl, pr, pt, pb, ml, mr, mt, mb }: CommonStyleProps) => {
   const style = [];
@@ -42,4 +43,8 @@ export const setCommonStyle = ({ pl, pr, pt, pb, ml, mr, mt, mb }: CommonStylePr
   }
 
   return style.join(';') + ';';
+};
+
+export const getAssets = (path: string) => {
+  return `${S3_BUCKET_HOST}${path}`;
 };

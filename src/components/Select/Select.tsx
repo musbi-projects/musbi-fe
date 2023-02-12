@@ -1,35 +1,44 @@
-import type { SelectedOption } from "./types";
+import type { SelectedOption } from './types';
 
-import React, { useState, useCallback, useEffect } from "react";
-import { useSelect, useSelectKeydown } from "./hooks";
-import { useEscClose, useOutsideClickClose } from "@/hooks";
-import { useTheme } from "styled-components";
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSelect, useSelectKeydown } from './hooks';
+import { useEscClose, useOutsideClick } from '@/hooks';
+import { useTheme } from 'styled-components';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import SelectProvider from "./SelectProvider";
-import Text from "../Text";
-import { MdOutlineArrowDropDown } from "react-icons/md";
+import SelectProvider from './SelectProvider';
+import Text from '../Text';
+import { MdOutlineArrowDropDown } from 'react-icons/md';
 
 interface SelectProps {
   children: React.ReactElement[];
-  onChange: ({id, value}: SelectedOption) => void;
+  onChange: ({ id, value }: SelectedOption) => void;
   placeholder?: string;
-  trigger?: "click" | "hover";
+  trigger?: 'click' | 'hover';
   defaultValue?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
-  height?: React.CSSProperties["height"];
+  height?: React.CSSProperties['height'];
 }
 
-export default function Select({ children, trigger = "click", defaultValue, disabled, placeholder,icon, height, onChange }: SelectProps) {
+export default function Select({
+  children,
+  trigger = 'click',
+  defaultValue,
+  disabled,
+  placeholder,
+  icon,
+  height,
+  onChange,
+}: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleCloseSelect = useCallback(() => {
     setIsOpen(false);
   }, [setIsOpen]);
 
   useEscClose(() => setIsOpen(false));
-  const { ref } = useOutsideClickClose(() => setIsOpen(false));
+  const { ref } = useOutsideClick(() => setIsOpen(false));
   const { value, selectedOption, handleClickSelectOption, filteredChildren, handleChange } = useSelect({
     children,
     isOpen,
@@ -45,16 +54,23 @@ export default function Select({ children, trigger = "click", defaultValue, disa
   }, [selectedOption]);
 
   return (
-    <SelectProvider handleClickSelectOption={handleClickSelectOption} targetIndex={targetIndex} selectedOption={selectedOption}>
+    <SelectProvider
+      handleClickSelectOption={handleClickSelectOption}
+      targetIndex={targetIndex}
+      selectedOption={selectedOption}
+    >
       <StyledSelectContainer
-        onClick={(e) => trigger === "click" && setIsOpen(true)}
-        onMouseEnter={() => trigger === "hover" && setIsOpen(true)}
-        onMouseLeave={() => trigger === "hover" && setIsOpen(false)}
+        onClick={(e) => trigger === 'click' && setIsOpen(true)}
+        onMouseEnter={() => trigger === 'hover' && setIsOpen(true)}
+        onMouseLeave={() => trigger === 'hover' && setIsOpen(false)}
         ref={ref}
       >
-
         {isOpen && <StyledInput value={value} onChange={handleChange} placeholder={placeholder}></StyledInput>}
-        {!isOpen && <Text as='p' size={theme.font.body.medium} color='black'>{selectedOption.value || defaultValue}</Text>}
+        {!isOpen && (
+          <Text as='p' size={theme.font.body.medium} color='black'>
+            {selectedOption.value || defaultValue}
+          </Text>
+        )}
 
         <StyledIconsWrapper>
           {icon}
@@ -95,13 +111,13 @@ const StyledIconsWrapper = styled.div`
   column-gap: 8px;
 `;
 
-const StyledOptionList = styled.ul<{ height: React.CSSProperties["height"] }>`
+const StyledOptionList = styled.ul<{ height: React.CSSProperties['height'] }>`
   position: absolute;
   left: 0;
   top: calc(100% + 4px);
   width: 100%;
   height: fit-content;
-  max-height: ${({ height }) => height || "300px"};
+  max-height: ${({ height }) => height || '300px'};
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -114,5 +130,5 @@ const StyledInput = styled.input`
   outline: none;
   border: none;
   position: relative;
-  font-size: ${({theme}) => theme.font.body.medium};
+  font-size: ${({ theme }) => theme.font.body.medium};
 `;
