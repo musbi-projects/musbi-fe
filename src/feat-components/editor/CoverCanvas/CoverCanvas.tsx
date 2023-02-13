@@ -14,7 +14,7 @@ const CoverCanvas = ({ contents }: CoverCanvasProps) => {
         <StyledCanvasLabel>첫 페이지</StyledCanvasLabel>
         <StyledCanvasContent isFocus={isFocus} data-canvas-id='cover'>
           {contents?.map((layer) => (
-            <>{JSON.stringify(layer, null, 2)}</>
+            <div key={layer.id}>{JSON.stringify(layer, null, 2)}</div>
           ))}
         </StyledCanvasContent>
       </StyledCoverCanvasContainer>

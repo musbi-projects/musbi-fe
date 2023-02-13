@@ -5,7 +5,6 @@ import { EditorViewInfo } from '@/recoil/editorView/types';
 const editorView = atom<EditorViewInfo>({
   key: 'editorView',
   default: {
-    currentCanvas: null,
     currentLayer: null,
     cover: {
       contents: [],

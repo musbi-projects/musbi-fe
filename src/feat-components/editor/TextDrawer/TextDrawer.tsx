@@ -23,10 +23,10 @@ const TextDrawer = () => {
       <StyledScrollContainer>
         <StyledTextList>
           {textList &&
-            textList?.map((item: any) => {
-              const { thumbnail, fontFamily, id } = item;
+            textList?.map((item, idx) => {
+              const { thumbnail, fontFamily } = item;
               return (
-                <StyledTextItem key={`text-item-${id}`} onClick={() => handleClickDrawerItem(item)}>
+                <StyledTextItem key={`text-item-${idx + 1}`} onClick={() => handleClickDrawerItem(item)}>
                   <Image src={thumbnail} alt={fontFamily} fill />
                 </StyledTextItem>
               );
