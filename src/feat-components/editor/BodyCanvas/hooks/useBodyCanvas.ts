@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { useEditorViewValue } from '@/recoil/editorView';
+import { useCanvasValue } from '@/recoil/canvas';
 
 export const useBodyCanvas = () => {
-  const editorViewValues = useEditorViewValue();
-  const isFocus = useMemo(() => editorViewValues.currentCanvas === 'body', [editorViewValues.currentCanvas]);
+  const { currentCanvas } = useCanvasValue();
+  const isFocus = useMemo(() => currentCanvas === 'body', [currentCanvas]);
 
   return { isFocus };
 };

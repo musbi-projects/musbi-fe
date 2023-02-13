@@ -1,12 +1,12 @@
 import React from 'react';
-import { useEditorViewValue } from '@/recoil/editorView';
 import { DRAWER_WIDTH, TOOLBOX_WIDTH } from '@/constants';
+import { useCanvasValue } from '@/recoil/canvas';
 import styled, { css } from 'styled-components';
 
 const EditorStatus = () => {
-  const editorViewValues = useEditorViewValue();
+  const { currentCanvas } = useCanvasValue();
 
-  return <StyledEditorStatus>canvas: {editorViewValues.currentCanvas} / layer: oooo</StyledEditorStatus>;
+  return <StyledEditorStatus>canvas: {currentCanvas} / layer: oooo</StyledEditorStatus>;
 };
 
 export default EditorStatus;

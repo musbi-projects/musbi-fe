@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 const EditorPage = () => {
   const { editorViewContents, currentMenu } = useEditorPage();
-  // console.log('[contents]', editorViewContents);
+  console.log('[contents]', editorViewContents);
 
   return (
     <>

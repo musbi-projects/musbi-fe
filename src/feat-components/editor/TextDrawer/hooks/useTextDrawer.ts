@@ -22,7 +22,6 @@ export const useTextDrawer = () => {
   const [editorView, setEditorView] = useEditorViewState();
   const { currentCanvas } = useCanvasValue();
   const { contents: currentContents } = useMemo(() => editorView[currentCanvas], [editorView, currentCanvas]);
-  console.log('[currentContents]', currentContents);
 
   const textList = useMemo(() => {
     return textDrawerData?.data.filter(
