@@ -34,6 +34,7 @@ const Header = ({ left, right }: HeaderProps) => {
 export default Header;
 
 const StyledCustomContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
