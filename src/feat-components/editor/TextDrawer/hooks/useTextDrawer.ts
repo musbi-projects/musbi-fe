@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebounce } from '@/hooks';
 import { useEditorViewState } from '@/recoil/editorView';
-import { v4 as uuidv4 } from 'uuid';
 import { useCanvasValue } from '@/recoil/canvas';
+import { v4 as uuidv4 } from 'uuid';
 
 interface TextDrawerItem {
   thumbnail: string;
@@ -39,23 +39,23 @@ export const useTextDrawer = () => {
     const data = [
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/ddangFonts.png',
-        fontFamily: 'Nanum Gothic',
-        name: '나눔고딕',
+        fontFamily: 'TTTtangsbudaejjigaeB',
+        name: '땅스부대찌개체',
       },
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/earlyfont_watermelon.png',
-        fontFamily: 'SUITE',
-        name: '수트',
+        fontFamily: 'earlyfont_watermelon',
+        name: '수박화체',
       },
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/kyoboHandwriting2021sjy.png',
-        fontFamily: 'MyeongJo',
-        name: '명조',
+        fontFamily: 'kyoboHandwriting2021sjy',
+        name: '교보문고 손글씨성도연',
       },
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/leferi.png',
-        fontFamily: 'MyeongJo',
-        name: '명조',
+        fontFamily: 'leferi',
+        name: '레페리포인트 OBLIQUE',
       },
     ];
 
