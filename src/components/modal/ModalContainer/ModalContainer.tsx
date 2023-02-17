@@ -11,7 +11,7 @@ interface ArgsParams {
 interface ModalContainerProps {
   isOpen: boolean;
   handleCloseModal: () => void;
-  children: (args: ArgsParams) => React.ReactNode;
+  children: React.ReactNode;
 }
 
 const ModalContainer = ({ isOpen, handleCloseModal, children }: ModalContainerProps) => {
@@ -40,7 +40,7 @@ const ModalContainer = ({ isOpen, handleCloseModal, children }: ModalContainerPr
         ? createPortal(
             <>
               <StyledDimmed />
-              <article>{children({ isOpen: _isOpen, modalRef: ref })}</article>
+              <article>{children}</article>
             </>,
             bodyEl,
           )
