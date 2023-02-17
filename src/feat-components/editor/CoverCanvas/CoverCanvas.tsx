@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useCoverCanvas } from '@/feat-components/editor/CoverCanvas/hooks/useCoverCanvas';
 import styled, { css } from 'styled-components';
+import TextLayer from '@/feat-components/editor/TextLayer';
 
 interface CoverCanvasProps {
   contents?: any[];
@@ -8,14 +9,27 @@ interface CoverCanvasProps {
 
 const CoverCanvas = ({ contents }: CoverCanvasProps) => {
   const { isFocus } = useCoverCanvas();
+  const renderer = useCallback(
+    (contents: any[]) => {
+      return contents?.map((layer) => {
+        if (layer.type === 'TEXT') {
+          return <TextLayer key={layer.id} {...layer} />;
+        }
+
+        if (layer.type === 'BACKGROUND') {
+          return <div>배경</div>;
+        }
+      });
+    },
+    [contents],
+  );
+
   return (
     <>
       <StyledCoverCanvasContainer>
         <StyledCanvasLabel>첫 페이지</StyledCanvasLabel>
         <StyledCanvasContent isFocus={isFocus} data-canvas-id='cover'>
-          {contents?.map((layer) => (
-            <div key={layer.id}>{JSON.stringify(layer, null, 2)}</div>
-          ))}
+          {renderer(contents || [])}
         </StyledCanvasContent>
       </StyledCoverCanvasContainer>
     </>
