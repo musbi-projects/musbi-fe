@@ -22,5 +22,6 @@ const StyledEditorStatus = styled.div`
     color: #fff;
     font-weight: 300;
     background-color: #2c2c2c;
+    z-index: 1000;
   `}
 `;

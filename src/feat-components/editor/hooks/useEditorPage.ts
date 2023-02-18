@@ -28,15 +28,16 @@ export const useEditorPage = () => {
     const observeCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         const targetEl = entry.target as HTMLDivElement;
-        const halfPoint = window.innerHeight / 2;
-        const scrollY = halfPoint + window.scrollY;
+        const halfHeightOfWindow = window.innerHeight / 2;
+        const scrollY = halfHeightOfWindow + window.scrollY; // 현재 화면의 중간 포인트
         const start = targetEl.offsetTop;
         const end = start + targetEl.offsetHeight;
         const isEnter = start <= scrollY && scrollY <= end;
         const canvasId = targetEl?.dataset?.canvasId as CanvasStatus['currentCanvas'];
+        const { boundingClientRect } = entry;
 
         if (isEnter) {
-          setCanvasState({ currentCanvas: canvasId });
+          setCanvasState({ currentCanvas: canvasId, boundingClientRect });
         }
       });
     };

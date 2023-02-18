@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 const EditorPage = () => {
   const { editorViewContents, currentMenu } = useEditorPage();
-  console.log('[contents]', editorViewContents);
+  // console.log('[contents]', editorViewContents);
 
   return (
     <>
@@ -30,16 +30,6 @@ const EditorPage = () => {
 };
 
 export default EditorPage;
-
-const Line = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 1px;
-  background-color: red;
-`;
 
 const StyledContentContainer = styled.div`
   width: calc(100% - ${TOOLBOX_WIDTH + DRAWER_WIDTH}px);

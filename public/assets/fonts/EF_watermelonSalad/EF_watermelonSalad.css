@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'EF_watermelonSalad';
+    src: url('./EF_watermelonSalad.otf') format('opentype'),  url('./EF_watermelonSalad.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

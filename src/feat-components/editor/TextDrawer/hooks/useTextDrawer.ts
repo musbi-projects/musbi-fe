@@ -39,22 +39,23 @@ export const useTextDrawer = () => {
     const data = [
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/ddangFonts.png',
-        fontFamily: 'TTTtangsbudaejjigaeB',
+        fontFamily: 'TTTtangsbudaejjigaeM',
         name: '땅스부대찌개체',
       },
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/earlyfont_watermelon.png',
-        fontFamily: 'earlyfont_watermelon',
+        fontFamily: 'EF_watermelonSalad',
         name: '수박화체',
       },
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/kyoboHandwriting2021sjy.png',
-        fontFamily: 'kyoboHandwriting2021sjy',
+        fontFamily: 'KyoboHandwriting2021sjy',
         name: '교보문고 손글씨성도연',
       },
       {
         thumbnail: 'https://musbi-bucket.s3.ap-northeast-1.amazonaws.com/images/fonts/leferi.png',
-        fontFamily: 'leferi',
+        fontFamily: 'LeferiPointSpecial',
+        fontWeight: 300,
         name: '레페리포인트 OBLIQUE',
       },
     ];

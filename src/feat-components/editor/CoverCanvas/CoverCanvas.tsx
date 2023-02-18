@@ -8,12 +8,12 @@ interface CoverCanvasProps {
 }
 
 const CoverCanvas = ({ contents }: CoverCanvasProps) => {
-  const { isFocus } = useCoverCanvas();
+  const { isFocus, center } = useCoverCanvas();
   const renderer = useCallback(
     (contents: any[]) => {
       return contents?.map((layer) => {
         if (layer.type === 'TEXT') {
-          return <TextLayer key={layer.id} {...layer} />;
+          return <TextLayer key={layer.id} center={center} {...layer} />;
         }
 
         if (layer.type === 'BACKGROUND') {
