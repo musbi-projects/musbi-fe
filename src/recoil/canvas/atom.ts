@@ -5,16 +5,7 @@ const canvasStatus = atom<CanvasStatus>({
   key: 'canvasStatus',
   default: {
     currentCanvas: 'cover',
-    boundingClientRect: {
-      x: 62,
-      y: 155,
-      width: 390,
-      height: 844,
-      top: 155,
-      right: 452,
-      bottom: 999,
-      left: 62,
-    },
+    target: null,
   },
 });
 

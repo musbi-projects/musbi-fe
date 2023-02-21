@@ -23,6 +23,7 @@
     "react-color": "^2.19.3",
     "react-contenteditable": "^3.3.6",
     "react-dom": "18.2.0",
+    "react-draggable": "^4.4.5",
     "react-icons": "^4.7.1",
     "recoil": "^0.7.6",
     "sanitize-html": "^2.9.0",

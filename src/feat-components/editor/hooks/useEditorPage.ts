@@ -34,10 +34,10 @@ export const useEditorPage = () => {
         const end = start + targetEl.offsetHeight;
         const isEnter = start <= scrollY && scrollY <= end;
         const canvasId = targetEl?.dataset?.canvasId as CanvasStatus['currentCanvas'];
-        const { boundingClientRect } = entry;
+        const { target } = entry;
 
         if (isEnter) {
-          setCanvasState({ currentCanvas: canvasId, boundingClientRect });
+          setCanvasState({ currentCanvas: canvasId, target });
         }
       });
     };

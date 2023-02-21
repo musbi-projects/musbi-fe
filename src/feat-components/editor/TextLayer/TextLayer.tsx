@@ -1,18 +1,24 @@
-import React, { memo, useCallback, useEffect, useState, FocusEvent, useRef, useMemo, useLayoutEffect } from 'react';
+import React, { memo, useCallback, useEffect, useState, FocusEvent, useRef, useLayoutEffect } from 'react';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import sanitizeHtml from 'sanitize-html';
+import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import styled, { css } from 'styled-components';
+
+interface LayerPosition {
+  top: number;
+  left: number;
+}
 
 interface TextLayerProps {
   id: string;
   content: string;
   fontFamily: string;
   fontWeight: number;
-  center: { top: number; left: number };
+  center: LayerPosition;
 }
 
 const sanitizeConf = {
-  allowedTags: ['b', 'i', 'a', 'p', 'br'],
+  allowedTags: ['b', 'i', 'a', 'p'],
   allowedAttributes: { a: ['href'] },
 };
 
@@ -20,10 +26,12 @@ const TextLayer = (props: TextLayerProps) => {
   const { id, content: initialContent, fontFamily, fontWeight, center } = props;
   const [content, setContent] = useState(initialContent);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [layerPosition, setLayerPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
-  const layerRef = useRef<HTMLDivElement | null>();
+  const [layerPosition, setLayerPosition] = useState<LayerPosition>({ top: 0, left: 0 });
+  const layerRef = useRef<HTMLDivElement | null>(null);
+  console.log('[center]', center);
 
   const handleContentChange = useCallback((e: ContentEditableEvent) => {
+    console.log('[content]', e.currentTarget.innerHTML);
     setContent(e.currentTarget.innerHTML);
   }, []);
 
@@ -36,11 +44,7 @@ const TextLayer = (props: TextLayerProps) => {
     setContent(e.currentTarget.innerHTML);
   }, []);
 
-  const handleDragEnterLayer = useCallback(() => {
-    console.log('[handleDragEnter]');
-  }, []);
-
-  const handleDragLayer = useCallback(() => {
+  const handleDragLayer = useCallback((e: DraggableEvent, data: DraggableData) => {
     console.log('[handleDrag]');
   }, []);
 
@@ -48,6 +52,7 @@ const TextLayer = (props: TextLayerProps) => {
     console.log('[handleClickLayer]');
   }, []);
 
+  // 초기 중앙 포지셔닝을 위해 레이어 사이즈를 계산해
   const initLayerSize = useCallback(() => {
     const layerRect = layerRef.current!.getBoundingClientRect();
     const left = center.left - layerRect.width / 2;
@@ -64,21 +69,21 @@ const TextLayer = (props: TextLayerProps) => {
   }, [initialContent]);
 
   return (
-    <StyledTextLayer
-      center={layerPosition}
-      disabled={isDisabled}
-      fontFamily={fontFamily}
-      fontWeight={fontWeight}
-      onBlur={handleBlurLayer}
-      onChange={handleContentChange}
-      onClick={handleClickLayer}
-      onDrag={handleDragLayer}
-      onDragEnter={handleDragEnterLayer}
-      onDoubleClick={handleDoubleClickLayer}
-      html={content}
-      tagName='div'
-      innerRef={(ref: HTMLDivElement) => (layerRef.current = ref)}
-    />
+    <Draggable onDrag={handleDragLayer} nodeRef={layerRef}>
+      <StyledTextLayer
+        center={layerPosition}
+        disabled={isDisabled}
+        fontFamily={fontFamily}
+        fontWeight={fontWeight}
+        onBlur={handleBlurLayer}
+        onChange={handleContentChange}
+        onClick={handleClickLayer}
+        onDoubleClick={handleDoubleClickLayer}
+        html={content}
+        tagName='div'
+        innerRef={layerRef}
+      />
+    </Draggable>
   );
 };
 
