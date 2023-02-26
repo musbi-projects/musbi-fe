@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@/components/Header';
+import Header from '@/components/header/Header';
 import ToolBox from '@/feat-components/editor/ToolBox';
 import BodyCanvas from '@/feat-components/editor/BodyCanvas';
 import CoverCanvas from '@/feat-components/editor/CoverCanvas';

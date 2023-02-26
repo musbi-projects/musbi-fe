@@ -1,8 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import ModalContainer from '@/components/modal/ModalContainer';
-
-export default function useModal() {
+export const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCloseModal = useCallback(() => {
@@ -18,4 +16,4 @@ export default function useModal() {
     handleOpenModal,
     handleCloseModal,
   };
-}
+};

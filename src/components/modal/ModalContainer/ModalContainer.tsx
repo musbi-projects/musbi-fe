@@ -35,12 +35,12 @@ const ModalContainer = ({ isOpen, handleCloseModal, children }: ModalContainerPr
   }
 
   return (
-    <div ref={ref}>
+    <div>
       {bodyEl && children
         ? createPortal(
             <>
               <StyledDimmed />
-              <article>{children}</article>
+              <article ref={ref}>{children}</article>
             </>,
             bodyEl,
           )

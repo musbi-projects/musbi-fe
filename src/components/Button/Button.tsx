@@ -1,12 +1,9 @@
-import { ButtonHTMLAttributes, HTMLAttributes } from "react";
-import styled, { DefaultTheme } from "styled-components";
+import type { ButtonSize, ButtonShape, ButtonVariant, ButtonColor } from './types';
 
-type ButtonSize = "small" | "medium" | "large";
-type ButtonShape = "circle" | "round";
-type ButtonVariant = "text" | "outlined" | "contained";
-type ButtonColor = "primary" | "secondary";
+import { ButtonHTMLAttributes, HTMLAttributes } from 'react';
+import styled, { DefaultTheme } from 'styled-components';
 
-interface ButtonProps {
+export interface ButtonProps {
   size: ButtonSize;
   shape: ButtonShape;
   variant: ButtonVariant;
@@ -17,12 +14,12 @@ interface ButtonProps {
   rightIcon?: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  width?: React.CSSProperties["width"];
-  weight?: React.CSSProperties["fontWeight"];
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  width?: React.CSSProperties['width'];
+  weight?: React.CSSProperties['fontWeight'];
 }
 
-const Button = ({ leftIcon, rightIcon, children, weight = "400", ...props }: ButtonProps) => {
+const Button = ({ leftIcon, rightIcon, children, weight = '400', ...props }: ButtonProps) => {
   return (
     <StyledButton {...props} weight={weight}>
       {leftIcon}
@@ -43,7 +40,7 @@ const StyledButton = styled.button<ButtonProps>`
   padding: 0px 24px;
   cursor: pointer;
 
-  width: ${({ width }) => width || "fit-content"};
+  width: ${({ width }) => width || 'fit-content'};
   border-radius: ${({ shape }) => getBorderRadius(shape)};
   height: ${({ size }) => getHeight(size)};
   border: ${({ variant }) => getBorder(variant)};
@@ -66,9 +63,9 @@ const StyledButton = styled.button<ButtonProps>`
 
 const getFontSize = (size: ButtonSize) => {
   const fontSize = {
-    large: "18px",
-    medium: "16px",
-    small: "14px",
+    large: '18px',
+    medium: '16px',
+    small: '14px',
   };
 
   return fontSize[size];
@@ -84,9 +81,9 @@ const getBackgroundColor = ({
   theme: DefaultTheme;
 }) => {
   const backgroundColor = {
-    text: "transparent",
-    outlined: "transparent",
-    contained: theme.color[color],
+    text: 'transparent',
+    outlined: 'transparent',
+    filled: theme.color[color],
   };
 
   return backgroundColor[variant];
@@ -104,7 +101,7 @@ const getFontColor = ({
   const fontColor = {
     text: theme.color[color],
     outlined: theme.color[color],
-    contained: "#EEE",
+    filled: '#EEE',
   };
 
   return fontColor[variant];
@@ -112,9 +109,9 @@ const getFontColor = ({
 
 const getBorder = (variant: ButtonVariant) => {
   const buttonBorder = {
-    text: "none",
-    outlined: "1px solid",
-    contained: "none",
+    text: 'none',
+    outlined: '1px solid',
+    filled: 'none',
   };
 
   return buttonBorder[variant];
@@ -122,8 +119,8 @@ const getBorder = (variant: ButtonVariant) => {
 
 const getBorderRadius = (shape: ButtonShape) => {
   const buttonBorderRadius = {
-    circle: "100px",
-    round: "4px",
+    circle: '100px',
+    round: '4px',
   };
 
   return buttonBorderRadius[shape];
@@ -131,9 +128,9 @@ const getBorderRadius = (shape: ButtonShape) => {
 
 const getHeight = (size: ButtonSize) => {
   const buttonHeight = {
-    large: "40px",
-    medium: "32px",
-    small: "24px",
+    large: '40px',
+    medium: '32px',
+    small: '24px',
   };
 
   return buttonHeight[size];
