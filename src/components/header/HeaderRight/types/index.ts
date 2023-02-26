@@ -5,3 +5,5 @@ export interface HeaderMenu {
   variant: ButtonVariant;
   onClick: () => void;
 }
+
+export type AuthModalType = 'login' | 'join';

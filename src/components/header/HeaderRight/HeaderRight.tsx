@@ -1,5 +1,6 @@
 import type { ButtonProps } from '@/components/Button';
-import type { HeaderMenu } from '@/components/header/HeaderRight';
+import type { HeaderMenu, AuthModalType } from '@/components/header/HeaderRight';
+import type { ModalHandler } from '@/types/common';
 
 import { useMemo } from 'react';
 import { useModal } from '@/hooks/useModal';
@@ -13,17 +14,39 @@ export default function HeaderRight() {
   const joinModal = useModal();
   const loginModal = useModal();
 
+  const modalHandler: ModalHandler<AuthModalType> = useMemo(
+    () => ({
+      login: {
+        open() {
+          loginModal.handleOpenModal();
+        },
+        close() {
+          loginModal.handleCloseModal();
+        },
+      },
+      join: {
+        open() {
+          joinModal.handleOpenModal();
+        },
+        close() {
+          joinModal.handleCloseModal();
+        },
+      },
+    }),
+    [],
+  );
+
   const menuList: HeaderMenu[] = useMemo(
     () => [
       {
         label: '로그인',
         variant: 'text',
-        onClick: loginModal.handleOpenModal,
+        onClick: modalHandler.login.open,
       },
       {
         label: '회원가입',
         variant: 'outlined',
-        onClick: joinModal.handleOpenModal,
+        onClick: modalHandler.join.open,
       },
     ],
     [],
@@ -50,8 +73,8 @@ export default function HeaderRight() {
         })}
       </StyledHeaderRightContainer>
 
-      <LoginModal isOpen={loginModal.isOpen} handleCloseModal={loginModal.handleCloseModal} />
-      <JoinModal isOpen={joinModal.isOpen} handleCloseModal={joinModal.handleCloseModal} />
+      <LoginModal isOpen={loginModal.isOpen} handler={modalHandler} />
+      <JoinModal isOpen={joinModal.isOpen} handler={modalHandler} />
     </>
   );
 }

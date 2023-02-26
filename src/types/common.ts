@@ -12,3 +12,10 @@ export interface CommonStyleProps {
 export type Nullable<T> = T | null;
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
+
+export type ModalHandler<T extends string | number> = {
+  [P in T]: {
+    open: () => void;
+    close: () => void;
+  };
+};

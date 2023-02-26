@@ -63,9 +63,9 @@ const StyledButton = styled.button<ButtonProps>`
 
 const getFontSize = (size: ButtonSize) => {
   const fontSize = {
-    large: '18px',
-    medium: '16px',
-    small: '14px',
+    large: '15px',
+    medium: '14px',
+    small: '13px',
   };
 
   return fontSize[size];
