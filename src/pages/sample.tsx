@@ -1,5 +1,5 @@
-import React from "react";
-import Header from "@/components/Header";
+import React from 'react';
+import Header from '@/components/header/Header';
 
 const SampleLeft = () => {
   return <h1>musbi</h1>;

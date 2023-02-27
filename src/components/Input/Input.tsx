@@ -1,37 +1,42 @@
-import React from "react";
-import { InputProps } from "./types";
-import { getVariantStyle } from "./utils";
-import { setCommonStyle } from "@/share/utils";
-import styled, { css } from "styled-components";
+import React, { ForwardedRef, forwardRef } from 'react';
+import { InputProps } from './types';
+import { getVariantStyle } from './utils';
+import { setCommonStyle } from '@/share/utils';
+import styled, { css } from 'styled-components';
 
-const Input = ({
-  fullWidth,
-  icon,
-  width,
-  height,
-  padding = "6px",
-  margin,
-  fontSize = "11px",
-  variant = "standard",
-  ml,
-  mr,
-  mt,
-  mb,
-  ...props
-}: InputProps) => {
-  return (
-    <StyledInputContainer {...{ fullWidth, width, margin, ml, mr, mt, mb }}>
-      <i>{icon}</i>
-      <StyledInput {...props} {...{ icon, height, variant, padding }} />
-    </StyledInputContainer>
-  );
-};
+const Input = forwardRef(
+  (
+    {
+      fullWidth,
+      icon,
+      width,
+      height,
+      padding = '6px',
+      margin,
+      fontSize = '11px',
+      variant = 'standard',
+      ml,
+      mr,
+      mt,
+      mb,
+      ...props
+    }: InputProps,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
+    return (
+      <StyledInputContainer {...{ fullWidth, width, margin, ml, mr, mt, mb }}>
+        <i>{icon}</i>
+        <StyledInput {...props} {...{ icon, height, variant, padding }} ref={ref} />
+      </StyledInputContainer>
+    );
+  },
+);
 
 export default Input;
 
 const StyledInputContainer = styled.div<InputProps>`
   ${({ fullWidth, width, margin, ml, mr, mt, mb }) => css`
-    display: ${fullWidth ? "block" : "inline-block"};
+    display: ${fullWidth ? 'block' : 'inline-block'};
     position: relative;
     width: ${width};
     margin: ${margin};
@@ -53,25 +58,14 @@ const StyledInputContainer = styled.div<InputProps>`
 `;
 
 const StyledInput = styled.input<InputProps>`
-  ${({
-    theme,
-    variant,
-    height,
-    padding,
-    fontSize,
-    icon,
-    pl,
-    pr,
-    pt,
-    pb,
-  }) => css`
+  ${({ theme, variant, height, padding, fontSize, icon, pl, pr, pt, pb }) => css`
     outline: none;
     border-radius: 4px;
     width: 100%;
     height: ${height};
     padding: ${padding};
     font-size: ${fontSize};
-    padding-left: ${icon ? "24px" : ""};
+    padding-left: ${icon ? '24px' : ''};
     border: 1px solid ${theme.color.border};
 
     &::placeholder {
