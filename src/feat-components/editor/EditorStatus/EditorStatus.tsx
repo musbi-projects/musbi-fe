@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 
 const EditorStatus = () => {
   const { currentCanvas } = useCanvasValue();
+  // console.log('[currentCanvas]', currentCanvas);
 
   return <StyledEditorStatus>canvas: {currentCanvas} / layer: oooo</StyledEditorStatus>;
 };

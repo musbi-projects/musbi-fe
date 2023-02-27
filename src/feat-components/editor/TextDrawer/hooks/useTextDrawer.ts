@@ -22,6 +22,7 @@ export const useTextDrawer = () => {
   const [editorView, setEditorView] = useEditorViewState();
   const { currentCanvas } = useCanvasValue();
   const { contents: currentContents } = useMemo(() => editorView[currentCanvas], [editorView, currentCanvas]);
+  console.log('[currentCanvas]', currentCanvas);
 
   const textList = useMemo(() => {
     return textDrawerData?.data.filter(
@@ -79,7 +80,7 @@ export const useTextDrawer = () => {
         };
       });
     },
-    [editorView, textDrawerData],
+    [currentCanvas, editorView, textDrawerData],
   );
 
   useEffect(() => {

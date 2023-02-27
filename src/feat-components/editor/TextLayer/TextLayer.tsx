@@ -28,10 +28,9 @@ const TextLayer = (props: TextLayerProps) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [layerPosition, setLayerPosition] = useState<LayerPosition>({ top: 0, left: 0 });
   const layerRef = useRef<HTMLDivElement | null>(null);
-  console.log('[center]', center);
+  // console.log('[center]', center);
 
   const handleContentChange = useCallback((e: ContentEditableEvent) => {
-    console.log('[content]', e.currentTarget.innerHTML);
     setContent(e.currentTarget.innerHTML);
   }, []);
 
@@ -45,7 +44,7 @@ const TextLayer = (props: TextLayerProps) => {
   }, []);
 
   const handleDragLayer = useCallback((e: DraggableEvent, data: DraggableData) => {
-    console.log('[handleDrag]');
+    console.log('[handleDrag]', data);
   }, []);
 
   const handleClickLayer = useCallback(() => {

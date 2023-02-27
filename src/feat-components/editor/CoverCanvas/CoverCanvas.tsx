@@ -25,14 +25,12 @@ const CoverCanvas = ({ contents }: CoverCanvasProps) => {
   );
 
   return (
-    <>
-      <StyledCoverCanvasContainer>
-        <StyledCanvasLabel>첫 페이지</StyledCanvasLabel>
-        <StyledCanvasContent isFocus={isFocus} data-canvas-id='cover'>
-          {renderer(contents || [])}
-        </StyledCanvasContent>
-      </StyledCoverCanvasContainer>
-    </>
+    <StyledCoverCanvasContainer>
+      <StyledCanvasLabel>첫 페이지</StyledCanvasLabel>
+      <StyledCanvasContent isFocus={isFocus} data-canvas-id='cover'>
+        {renderer(contents || [])}
+      </StyledCanvasContent>
+    </StyledCoverCanvasContainer>
   );
 };
 
@@ -56,6 +54,7 @@ const StyledCanvasLabel = styled.div`
 `;
 
 const StyledCoverCanvasContainer = styled.div`
+    position: relative;
     width: 390px;
     margin: 60px auto;
 `;

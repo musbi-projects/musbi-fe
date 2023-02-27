@@ -30,8 +30,8 @@ export const useEditorPage = () => {
         const targetEl = entry.target as HTMLDivElement;
         const halfHeightOfWindow = window.innerHeight / 2;
         const scrollY = halfHeightOfWindow + window.scrollY; // 현재 화면의 중간 포인트
-        const start = targetEl.offsetTop;
-        const end = start + targetEl.offsetHeight;
+        const start = entry.boundingClientRect.y;
+        const end = start + entry.boundingClientRect.height;
         const isEnter = start <= scrollY && scrollY <= end;
         const canvasId = targetEl?.dataset?.canvasId as CanvasStatus['currentCanvas'];
         const { target } = entry;

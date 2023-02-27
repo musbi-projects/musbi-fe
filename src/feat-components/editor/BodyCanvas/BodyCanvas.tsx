@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { useBodyCanvas } from '@/feat-components/editor/BodyCanvas/hooks/useBodyCanvas';
+import TextLayer from '@/feat-components/editor/TextLayer/TextLayer';
 
 interface BodyCanvasProps {
   contents?: any[];
 }
 
 const BodyCanvas = ({ contents }: BodyCanvasProps) => {
-  const { isFocus } = useBodyCanvas();
+  const { isFocus, center } = useBodyCanvas();
+  const renderer = useCallback(
+    (contents: any[]) => {
+      return contents?.map((layer) => {
+        if (layer.type === 'TEXT') {
+          return <TextLayer key={layer.id} center={center} {...layer} />;
+        }
+
+        if (layer.type === 'BACKGROUND') {
+          return <div>배경</div>;
+        }
+      });
+    },
+    [contents],
+  );
 
   return (
     <StyledBodyCanvasContainer>
       <StyledCanvasLabel>본문 페이지</StyledCanvasLabel>
       <StyledCanvasContent isFocus={isFocus} data-canvas-id='body'>
-        lorem*50
+        {renderer(contents || [])}
       </StyledCanvasContent>
     </StyledBodyCanvasContainer>
   );
@@ -39,6 +54,7 @@ const StyledCanvasLabel = styled.div`
 `;
 
 const StyledBodyCanvasContainer = styled.div`
+    position: relative;
     width: 390px;
     margin: 60px auto;
 `;
