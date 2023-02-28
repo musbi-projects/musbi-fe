@@ -1,8 +1,11 @@
-import React, { memo, useCallback, useEffect, useState, FocusEvent, useRef, useLayoutEffect } from 'react';
+import React, { memo, useCallback, useEffect, useState, FocusEvent, useRef, useLayoutEffect, useMemo } from 'react';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import sanitizeHtml from 'sanitize-html';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import styled, { css } from 'styled-components';
+import { useOutsideClick } from '@/hooks';
+import { useSetEditorViewState } from '@/recoil/editorView';
+import { useCanvasValue } from '@/recoil/canvas';
 
 interface LayerPosition {
   top: number;
@@ -25,26 +28,75 @@ const sanitizeConf = {
 const TextLayer = (props: TextLayerProps) => {
   const { id, content: initialContent, fontFamily, fontWeight, center } = props;
   const [content, setContent] = useState(initialContent);
+  const [clicked, setClicked] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [layerPosition, setLayerPosition] = useState<LayerPosition>({ top: 0, left: 0 });
-  const layerRef = useRef<HTMLDivElement | null>(null);
-  // console.log('[center]', center);
+  const setEditorViewState = useSetEditorViewState();
+  const { currentCanvas } = useCanvasValue();
+
+  // TODO: 현재 TextLayer 내용 한정 update 추후 fontFamily, name 등등 상태변경도 필요
+  const updateEditorViewState = (text: string) => {
+    setEditorViewState((prev) => {
+      const newContents = prev[currentCanvas].contents.map((item) => {
+        console.log('[item]', item);
+        if (item.id === id) {
+          return {
+            ...item,
+            content: text,
+          };
+        }
+
+        return item;
+      });
+
+      return {
+        ...prev,
+        [currentCanvas]: {
+          contents: newContents,
+        },
+      };
+    });
+  };
+
+  const handleOuterClick = useCallback(() => {
+    setClicked(false);
+    setIsDisabled(true);
+  }, []);
+
+  const { ref: layerRef } = useOutsideClick(handleOuterClick);
 
   const handleContentChange = useCallback((e: ContentEditableEvent) => {
     setContent(e.currentTarget.innerHTML);
+    updateEditorViewState(e.currentTarget.innerHTML);
   }, []);
 
   const handleDoubleClickLayer = useCallback(() => {
-    setIsDisabled(false);
-  }, []);
+    if (clicked) {
+      setIsDisabled(false);
+      return;
+    }
+    setClicked(!clicked);
+  }, [clicked]);
 
   const handleBlurLayer = useCallback((e: FocusEvent<HTMLDivElement>) => {
     setIsDisabled(true);
     setContent(e.currentTarget.innerHTML);
+    // updateEditorViewState(e.currentTarget.innerHTML);
   }, []);
 
-  const handleDragLayer = useCallback((e: DraggableEvent, data: DraggableData) => {
-    console.log('[handleDrag]', data);
+  //  편집중 상태 (isDisabled === false) 일때는 Dragging 을 취소하는 이벤트
+  const handleStartDragLayer = useCallback(() => {
+    if (!isDisabled) return false;
+  }, [isDisabled]);
+
+  const handleDraggingLayer = useCallback((e: DraggableEvent, data: DraggableData) => {
+    // console.log('[handleDrag]', data);
+    setIsDragging(true);
+  }, []);
+
+  const handleStopDragLayer = useCallback(() => {
+    setIsDragging(false);
   }, []);
 
   const handleClickLayer = useCallback(() => {
@@ -68,8 +120,14 @@ const TextLayer = (props: TextLayerProps) => {
   }, [initialContent]);
 
   return (
-    <Draggable onDrag={handleDragLayer} nodeRef={layerRef}>
+    <Draggable
+      onStart={handleStartDragLayer}
+      onDrag={handleDraggingLayer}
+      onStop={handleStopDragLayer}
+      nodeRef={layerRef}
+    >
       <StyledTextLayer
+        clicked={clicked.toString()}
         center={layerPosition}
         disabled={isDisabled}
         fontFamily={fontFamily}
@@ -79,8 +137,8 @@ const TextLayer = (props: TextLayerProps) => {
         onClick={handleClickLayer}
         onDoubleClick={handleDoubleClickLayer}
         html={content}
-        tagName='div'
         innerRef={layerRef}
+        tagName='div'
       />
     </Draggable>
   );
@@ -92,9 +150,10 @@ const StyledTextLayer = styled(ContentEditable)<{
   fontFamily: string;
   fontWeight: number;
   disabled: boolean;
+  clicked: string;
   center: { top: number; left: number };
 }>`
-  ${({ theme, fontFamily, fontWeight, disabled, center }) => css`
+  ${({ theme, fontFamily, fontWeight, disabled, clicked, center }) => css`
     outline: none;
     font-family: ${fontFamily};
     font-weight: ${fontWeight ? fontWeight : 'normal'};
@@ -104,9 +163,15 @@ const StyledTextLayer = styled(ContentEditable)<{
     top: ${center.top}px;
     left: ${center.left}px;
 
+
     &:hover,
     &:focus {
       box-shadow: 0 0 0 1px ${theme.color.primary};
     }
+
+    box-shadow: ${!disabled ? `0 0 0 1px ${theme.color.secondary} !important` : 'none'};
+    box-shadow: ${clicked === 'true' ? `0 0 0 1px ${theme.color.primary}` : 'none'};
+
+
   `}
 `;

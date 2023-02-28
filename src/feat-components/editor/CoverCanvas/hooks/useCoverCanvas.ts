@@ -8,8 +8,9 @@ export const useCoverCanvas = () => {
 
   const initCoverCanvas = useCallback(() => {
     const targetCanvas = canvas as HTMLElement;
-    const top = targetCanvas.offsetTop + targetCanvas.offsetHeight / 2;
-    const left = targetCanvas.offsetLeft + targetCanvas.offsetWidth / 2;
+    const top = targetCanvas.offsetHeight / 2;
+    const left = targetCanvas.offsetWidth / 2;
+
     setCenter({ top, left });
   }, [canvas]);
 

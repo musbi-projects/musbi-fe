@@ -38,10 +38,12 @@ export default BodyCanvas;
 
 const StyledCanvasContent = styled.div<{ isFocus: boolean }>`
   ${({ isFocus }) => css`
+    position: relative;
     min-height: 844px;
     border: 1px solid #fff;
     background-color: #fff;
     box-shadow: ${isFocus ? '0 3px 6px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.16)' : 'none'};
+    overflow: hidden;
   `}
 `;
 
@@ -54,7 +56,6 @@ const StyledCanvasLabel = styled.div`
 `;
 
 const StyledBodyCanvasContainer = styled.div`
-    position: relative;
     width: 390px;
     margin: 60px auto;
 `;
