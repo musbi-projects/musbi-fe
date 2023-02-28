@@ -39,7 +39,6 @@ const TextLayer = (props: TextLayerProps) => {
   const updateEditorViewState = (text: string) => {
     setEditorViewState((prev) => {
       const newContents = prev[currentCanvas].contents.map((item) => {
-        console.log('[item]', item);
         if (item.id === id) {
           return {
             ...item,

@@ -9,7 +9,6 @@ interface CoverCanvasProps {
 
 const CoverCanvas = ({ contents }: CoverCanvasProps) => {
   const { isFocus, center } = useCoverCanvas();
-  console.log('[CoverCanvas > center]', center);
   const renderer = useCallback(
     (contents: any[]) => {
       return contents?.map((layer) => {
