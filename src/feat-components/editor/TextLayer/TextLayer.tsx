@@ -106,7 +106,7 @@ const TextLayer = (props: TextLayerProps) => {
   // 초기 중앙 포지셔닝을 위해 레이어 사이즈를 계산해
   const initLayerSize = useCallback(() => {
     const layerRect = layerRef.current!.getBoundingClientRect();
-    const left = center.left - layerRect.width / 2;
+    const left = center?.left - layerRect.width / 2;
     setLayerPosition({ ...center, left });
   }, [layerRef.current]);
 
