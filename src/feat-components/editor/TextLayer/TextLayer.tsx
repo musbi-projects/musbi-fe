@@ -59,6 +59,7 @@ const TextLayer = (props: TextLayerProps) => {
   };
 
   const handleOuterClick = useCallback(() => {
+    console.log('[handleOuterClick]');
     setClicked(false);
     setIsDisabled(true);
   }, []);
@@ -79,9 +80,10 @@ const TextLayer = (props: TextLayerProps) => {
   }, [clicked]);
 
   const handleBlurLayer = useCallback((e: FocusEvent<HTMLDivElement>) => {
+    console.log('[handleBlurLayer]');
     setIsDisabled(true);
     setContent(e.currentTarget.innerHTML);
-    // updateEditorViewState(e.currentTarget.innerHTML);
+    updateEditorViewState(e.currentTarget.innerHTML);
   }, []);
 
   //  편집중 상태 (isDisabled === false) 일때는 Dragging 을 취소하는 이벤트
@@ -115,7 +117,7 @@ const TextLayer = (props: TextLayerProps) => {
   }, [layerRef.current]);
 
   useEffect(() => {
-    setContent(sanitizeHtml(initialContent, sanitizeConf));
+    setContent(initialContent);
   }, [initialContent]);
 
   return (
