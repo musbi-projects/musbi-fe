@@ -1,7 +1,8 @@
-import React, { memo, useCallback, useEffect, useState, FocusEvent, useRef, useLayoutEffect, useMemo } from 'react';
+import React, { memo, useCallback, useEffect, useState, FocusEvent, useLayoutEffect, useRef } from 'react';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import Moveable, { OnDrag, OnResize } from 'react-moveable';
 import styled, { css } from 'styled-components';
+import { Frame } from 'scenejs';
 import { useOutsideClick } from '@/hooks';
 import { useSetEditorViewState } from '@/recoil/editorView';
 import { useCanvasValue } from '@/recoil/canvas';
@@ -9,11 +10,6 @@ import { useCanvasValue } from '@/recoil/canvas';
 interface LayerPosition {
   top: number;
   left: number;
-}
-
-interface LayerSize {
-  width: 'auto' | number;
-  height: 'auto' | number;
 }
 
 interface TextLayerProps {
@@ -24,11 +20,6 @@ interface TextLayerProps {
   center: LayerPosition;
 }
 
-const sanitizeConf = {
-  allowedTags: ['b', 'i', 'a', 'p'],
-  allowedAttributes: { a: ['href'] },
-};
-
 const TextLayer = (props: TextLayerProps) => {
   const { id, content: initialContent, fontFamily, fontWeight, center } = props;
   const [content, setContent] = useState(initialContent);
@@ -37,9 +28,30 @@ const TextLayer = (props: TextLayerProps) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const setEditorViewState = useSetEditorViewState();
   const { currentCanvas } = useCanvasValue();
-  const [frame, setFrame] = useState<Record<string, any>>({ width: 'auto', height: 'auto', top: 0, left: 0 });
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const frameRef = useRef(
+    new Frame({
+      width: 'auto',
+      height: 'auto',
+      left: '0px',
+      top: '0px',
+      transform: {
+        rotate: '0deg',
+        scaleX: 1,
+        scaleY: 1,
+        matrix3d: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+      },
+    }),
+  );
 
-  console.log('[frame]', frame);
+  console.log('[isDragging]', isDragging);
+
+  const syncLayerFrame = (transformFn: () => void) => {
+    transformFn();
+    if (layerRef.current && frameRef.current) {
+      layerRef.current.style.cssText = frameRef.current.toCSSText();
+    }
+  };
 
   // TODO: 현재 TextLayer 내용 한정 update 추후 fontFamily, name 등등 상태변경도 필요
   const updateEditorViewState = (text: string) => {
@@ -68,6 +80,7 @@ const TextLayer = (props: TextLayerProps) => {
     console.log('[handleOuterClick]');
     setClicked(false);
     setIsDisabled(true);
+    setTarget(null);
   }, []);
 
   const { ref: layerRef } = useOutsideClick(handleOuterClick);
@@ -78,11 +91,12 @@ const TextLayer = (props: TextLayerProps) => {
   }, []);
 
   const handleDoubleClickLayer = useCallback(() => {
-    if (clicked) {
-      setIsDisabled(false);
-      return;
-    }
-    setClicked(!clicked);
+    setIsDisabled(false);
+    // if (clicked) {
+    //   setIsDisabled(false);
+    //   return;
+    // }
+    // setClicked(!clicked);
   }, [clicked]);
 
   const handleBlurLayer = useCallback((e: FocusEvent<HTMLDivElement>) => {
@@ -97,28 +111,28 @@ const TextLayer = (props: TextLayerProps) => {
     if (!isDisabled) return false;
   }, [isDisabled]);
 
-  const handleDraggingLayer = useCallback(
-    ({ left, top }: OnDrag) => {
-      setFrame({ ...frame, top, left });
-    },
-    [frame],
-  );
+  const handleDraggingLayer = useCallback(({ left, top }: OnDrag) => {
+    syncLayerFrame(() => {
+      frameRef.current.set('top', top + 'px');
+      frameRef.current.set('left', left + 'px');
+    });
+  }, []);
 
   const handleStopDragLayer = useCallback(() => {
     setIsDragging(false);
   }, []);
 
-  const handleResizeLayer = useCallback(
-    ({ target, width, height, transform }: OnResize) => {
-      console.log('height', height);
-      setFrame({ ...frame, width, height });
-      target.style.transform = transform;
-    },
-    [frame],
-  );
+  const handleResizeLayer = useCallback(({ width, height, transform }: OnResize) => {
+    syncLayerFrame(() => {
+      frameRef.current.set('width', width + 'px');
+      frameRef.current.set('height', height + 'px');
+      frameRef.current.set('transform', transform);
+    });
+  }, []);
 
   const handleClickLayer = useCallback(() => {
     console.log('[handleClickLayer]');
+    setTarget(layerRef.current);
   }, []);
 
   const getLayerStartPosition = useCallback(() => {
@@ -130,9 +144,14 @@ const TextLayer = (props: TextLayerProps) => {
 
   // 초기 중앙 포지셔닝을 위해 레이어 사이즈를 계산해
   const initLayer = useCallback(() => {
-    console.log('[initLayer]');
     const { top, left } = getLayerStartPosition();
-    setFrame({ ...frame, top, left });
+    if (layerRef.current) {
+      setTarget(layerRef.current);
+      syncLayerFrame(() => {
+        frameRef.current.set('top', top + 'px');
+        frameRef.current.set('left', left + 'px');
+      });
+    }
   }, [layerRef.current]);
 
   useLayoutEffect(() => {
@@ -151,19 +170,17 @@ const TextLayer = (props: TextLayerProps) => {
         draggable={true}
         resizable={true}
         throttleDrag={1}
+        throttleRotate={0.2}
         throttleResize={1}
         throttleScale={0.01}
-        throttleRotate={0.2}
         pinchThreshold={20}
-        target={layerRef.current}
+        target={target}
         onDrag={handleDraggingLayer}
         onDragStart={handleStartDragLayer}
         onDragEnd={handleStopDragLayer}
         onResize={handleResizeLayer}
       />
       <StyledTextLayer
-        frame={frame}
-        clicked={clicked.toString()}
         disabled={isDisabled}
         fontFamily={fontFamily}
         fontWeight={fontWeight}
@@ -185,28 +202,21 @@ const StyledTextLayer = styled(ContentEditable)<{
   fontFamily: string;
   fontWeight: number;
   disabled: boolean;
-  clicked: string;
-  frame: Record<string, any>;
 }>`
-  ${({ theme, fontFamily, fontWeight, disabled, clicked, frame }) => css`
+  ${({ theme, fontFamily, fontWeight, disabled }) => css`
     outline: none;
     font-family: ${fontFamily};
     font-weight: ${fontWeight ? fontWeight : 'normal'};
     cursor: ${disabled ? 'move' : 'initial'};
     position: absolute;
     display: inline-block;
-    top: ${frame?.top}px;
-    left: ${frame?.left}px;
-    width: ${typeof frame.width === 'string' ? frame.width : `${frame.width}px`};
-    height: ${typeof frame.height === 'string' ? frame.height : `${frame.height}px`};
+    word-break: break-all;
 
     &:hover,
     &:focus {
-      box-shadow: 0 0 0 1px ${theme.color.primary};
+      //box-shadow: 0 0 0 1px ${theme.color.primary};
     }
 
-    box-shadow: ${!disabled ? `0 0 0 1px ${theme.color.secondary} !important` : 'none'};
-    box-shadow: ${clicked === 'true' ? `0 0 0 1px ${theme.color.primary}` : 'none'};
 
 
   `}
